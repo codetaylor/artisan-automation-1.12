@@ -1,0 +1,16 @@
+[
+{
+  "modid": "artisanautomation",
+  "name": "Artisan Automation",
+  "description": "An automation solution for Artisan Worktables.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["codetaylor"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

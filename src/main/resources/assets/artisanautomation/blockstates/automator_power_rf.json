@@ -1,0 +1,72 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "artisanautomation:automator_power_rf"
+  },
+  "variants": {
+    "powered": {
+      "true": {
+        "textures": {
+          "plug": "artisanautomation:blocks/autobox_interface_rf_plug"
+        }
+      },
+      "false": {
+        "textures": {
+          "plug": "artisanautomation:blocks/autobox_interface_rf_plug_dark"
+        }
+      }
+    },
+    "north": {
+      "power": {
+        "submodel": {
+          "north": {"model": "artisanautomation:automator_power_plug_rf"}
+        }
+      },
+      "item": {
+        "submodel": {
+          "north": {"model": "artisanautomation:automator_power_plug_item"}
+        }
+      },
+      "none": {}
+    },
+    "south": {
+      "power": {
+        "submodel": {
+          "south": {"model": "artisanautomation:automator_power_plug_rf", "y": 180}
+        }
+      },
+      "item": {
+        "submodel": {
+          "south": {"model": "artisanautomation:automator_power_plug_item", "y": 180}
+        }
+      },
+      "none": {}
+    },
+    "east": {
+      "power": {
+        "submodel": {
+          "east": {"model": "artisanautomation:automator_power_plug_rf", "y": 90}
+        }
+      },
+      "item": {
+        "submodel": {
+          "east": {"model": "artisanautomation:automator_power_plug_item", "y": 90}
+        }
+      },
+      "none": {}
+    },
+    "west": {
+      "power": {
+        "submodel": {
+          "west": {"model": "artisanautomation:automator_power_plug_rf", "y": 270}
+        }
+      },
+      "item": {
+        "submodel": {
+          "west": {"model": "artisanautomation:automator_power_plug_item", "y": 270}
+        }
+      },
+      "none": {}
+    }
+  }
+}

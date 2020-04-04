@@ -1,0 +1,4 @@
+include ":athenaeum"
+project(":athenaeum").projectDir = file("../athenaeum")
+include ":artisan-worktables"
+project(":artisan-worktables").projectDir = file("../artisan-worktables")
