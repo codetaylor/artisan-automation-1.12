@@ -2,7 +2,7 @@ package com.codetaylor.mc.artisanautomation.modules.automator.event;
 
 import com.codetaylor.mc.artisanautomation.modules.automator.TooltipUtil;
 import com.codetaylor.mc.artisanautomation.modules.automator.item.ItemUpgrade;
-import com.codetaylor.mc.artisanworktables.api.internal.reference.Tags;
+import com.codetaylor.mc.artisanautomation.modules.automator.reference.UpgradeTags;
 import com.codetaylor.mc.athenaeum.util.TooltipHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -31,50 +31,50 @@ public class TooltipEventHandler {
     if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)
         || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
 
-      if (upgradeTag.hasKey(Tags.TAG_UPGRADE_SPEED)) {
-        int speedModifier = (int) (upgradeTag.getFloat(Tags.TAG_UPGRADE_SPEED) * 100);
+      if (upgradeTag.hasKey(UpgradeTags.TAG_UPGRADE_SPEED)) {
+        int speedModifier = (int) (upgradeTag.getFloat(UpgradeTags.TAG_UPGRADE_SPEED) * 100);
 
         if (speedModifier != 0) {
           tooltip.add(TextFormatting.GRAY + TooltipUtil.getSpeedString(speedModifier, true));
         }
       }
 
-      if (upgradeTag.hasKey(Tags.TAG_UPGRADE_ENERGY_USAGE)) {
-        int energyUsageModifier = (int) (upgradeTag.getFloat(Tags.TAG_UPGRADE_ENERGY_USAGE) * 100);
+      if (upgradeTag.hasKey(UpgradeTags.TAG_UPGRADE_ENERGY_USAGE)) {
+        int energyUsageModifier = (int) (upgradeTag.getFloat(UpgradeTags.TAG_UPGRADE_ENERGY_USAGE) * 100);
 
         if (energyUsageModifier != 0) {
           tooltip.add(TextFormatting.GRAY + TooltipUtil.getEnergyUsageString(energyUsageModifier, true));
         }
       }
 
-      if (upgradeTag.hasKey(Tags.TAG_UPGRADE_FLUID_CAPACITY)) {
-        int fluidCapacityModifier = (int) (upgradeTag.getFloat(Tags.TAG_UPGRADE_FLUID_CAPACITY) * 100);
+      if (upgradeTag.hasKey(UpgradeTags.TAG_UPGRADE_FLUID_CAPACITY)) {
+        int fluidCapacityModifier = (int) (upgradeTag.getFloat(UpgradeTags.TAG_UPGRADE_FLUID_CAPACITY) * 100);
 
         if (fluidCapacityModifier != 0) {
           tooltip.add(TextFormatting.GRAY + TooltipUtil.getFluidCapacityString(fluidCapacityModifier, true));
         }
       }
 
-      if (upgradeTag.hasKey(Tags.TAG_UPGRADE_ENERGY_CAPACITY)) {
-        int energyCapacityModifier = (int) (upgradeTag.getFloat(Tags.TAG_UPGRADE_ENERGY_CAPACITY) * 100);
+      if (upgradeTag.hasKey(UpgradeTags.TAG_UPGRADE_ENERGY_CAPACITY)) {
+        int energyCapacityModifier = (int) (upgradeTag.getFloat(UpgradeTags.TAG_UPGRADE_ENERGY_CAPACITY) * 100);
 
         if (energyCapacityModifier != 0) {
           tooltip.add(TextFormatting.GRAY + TooltipUtil.getEnergyCapacityString(energyCapacityModifier, true));
         }
       }
 
-      if (upgradeTag.hasKey(Tags.TAG_UPGRADE_AUTO_IMPORT_ITEMS)) {
-        boolean autoImportItems = upgradeTag.getBoolean(Tags.TAG_UPGRADE_AUTO_IMPORT_ITEMS);
+      if (upgradeTag.hasKey(UpgradeTags.TAG_UPGRADE_AUTO_IMPORT_ITEMS)) {
+        boolean autoImportItems = upgradeTag.getBoolean(UpgradeTags.TAG_UPGRADE_AUTO_IMPORT_ITEMS);
         tooltip.add(TextFormatting.GRAY + TooltipUtil.getAutoImportItemsString(autoImportItems));
       }
 
-      if (upgradeTag.hasKey(Tags.TAG_UPGRADE_AUTO_EXPORT_ITEMS)) {
-        boolean autoExportItems = upgradeTag.getBoolean(Tags.TAG_UPGRADE_AUTO_EXPORT_ITEMS);
+      if (upgradeTag.hasKey(UpgradeTags.TAG_UPGRADE_AUTO_EXPORT_ITEMS)) {
+        boolean autoExportItems = upgradeTag.getBoolean(UpgradeTags.TAG_UPGRADE_AUTO_EXPORT_ITEMS);
         tooltip.add(TextFormatting.GRAY + TooltipUtil.getAutoExportItemsString(autoExportItems));
       }
 
-      if (upgradeTag.hasKey(Tags.TAG_UPGRADE_AUTO_IMPORT_FLUIDS)) {
-        boolean autoImportFluids = upgradeTag.getBoolean(Tags.TAG_UPGRADE_AUTO_IMPORT_FLUIDS);
+      if (upgradeTag.hasKey(UpgradeTags.TAG_UPGRADE_AUTO_IMPORT_FLUIDS)) {
+        boolean autoImportFluids = upgradeTag.getBoolean(UpgradeTags.TAG_UPGRADE_AUTO_IMPORT_FLUIDS);
         tooltip.add(TextFormatting.GRAY + TooltipUtil.getAutoImportFluidsString(autoImportFluids));
       }
 

@@ -1,5 +1,12 @@
 package com.codetaylor.mc.artisanautomation.modules.automator.tile;
 
+import com.codetaylor.mc.artisanautomation.modules.automator.ModuleAutomator;
+import com.codetaylor.mc.artisanautomation.modules.automator.ModuleAutomatorConfig;
+import com.codetaylor.mc.artisanautomation.modules.automator.Util;
+import com.codetaylor.mc.artisanautomation.modules.automator.gui.AutomatorContainer;
+import com.codetaylor.mc.artisanautomation.modules.automator.gui.AutomatorGuiContainer;
+import com.codetaylor.mc.artisanautomation.modules.automator.item.ItemUpgrade;
+import com.codetaylor.mc.artisanautomation.modules.automator.reference.UpgradeTags;
 import com.codetaylor.mc.artisanworktables.api.ArtisanAPI;
 import com.codetaylor.mc.artisanworktables.api.ArtisanConfig;
 import com.codetaylor.mc.artisanworktables.api.ArtisanToolHandlers;
@@ -8,17 +15,10 @@ import com.codetaylor.mc.artisanworktables.api.internal.recipe.ICraftingMatrixSt
 import com.codetaylor.mc.artisanworktables.api.internal.recipe.OutputWeightPair;
 import com.codetaylor.mc.artisanworktables.api.internal.reference.EnumTier;
 import com.codetaylor.mc.artisanworktables.api.internal.reference.EnumType;
-import com.codetaylor.mc.artisanworktables.api.internal.reference.Tags;
 import com.codetaylor.mc.artisanworktables.api.recipe.IArtisanRecipe;
 import com.codetaylor.mc.artisanworktables.api.recipe.IToolHandler;
 import com.codetaylor.mc.artisanworktables.lib.IBooleanSupplier;
 import com.codetaylor.mc.artisanworktables.lib.TileNetBase;
-import com.codetaylor.mc.artisanautomation.modules.automator.ModuleAutomator;
-import com.codetaylor.mc.artisanautomation.modules.automator.ModuleAutomatorConfig;
-import com.codetaylor.mc.artisanautomation.modules.automator.Util;
-import com.codetaylor.mc.artisanautomation.modules.automator.gui.AutomatorContainer;
-import com.codetaylor.mc.artisanautomation.modules.automator.gui.AutomatorGuiContainer;
-import com.codetaylor.mc.artisanautomation.modules.automator.item.ItemUpgrade;
 import com.codetaylor.mc.artisanworktables.modules.toolbox.ModuleToolbox;
 import com.codetaylor.mc.artisanworktables.modules.toolbox.ModuleToolboxConfig;
 import com.codetaylor.mc.artisanworktables.modules.worktables.block.BlockBase;
@@ -454,26 +454,26 @@ public class TileAutomator
     public NBTTagCompound serializeNBT() {
 
       NBTTagCompound tag = new NBTTagCompound();
-      tag.setFloat(Tags.TAG_UPGRADE_SPEED, this.speed.get());
-      tag.setFloat(Tags.TAG_UPGRADE_ENERGY_USAGE, this.energyUsage.get());
-      tag.setFloat(Tags.TAG_UPGRADE_FLUID_CAPACITY, this.fluidCapacity.get());
-      tag.setFloat(Tags.TAG_UPGRADE_ENERGY_CAPACITY, this.energyCapacity.get());
-      tag.setBoolean(Tags.TAG_UPGRADE_AUTO_EXPORT_ITEMS, this.autoExportItems.get());
-      tag.setBoolean(Tags.TAG_UPGRADE_AUTO_IMPORT_ITEMS, this.autoImportItems.get());
-      tag.setBoolean(Tags.TAG_UPGRADE_AUTO_IMPORT_FLUIDS, this.autoImportFluids.get());
+      tag.setFloat(UpgradeTags.TAG_UPGRADE_SPEED, this.speed.get());
+      tag.setFloat(UpgradeTags.TAG_UPGRADE_ENERGY_USAGE, this.energyUsage.get());
+      tag.setFloat(UpgradeTags.TAG_UPGRADE_FLUID_CAPACITY, this.fluidCapacity.get());
+      tag.setFloat(UpgradeTags.TAG_UPGRADE_ENERGY_CAPACITY, this.energyCapacity.get());
+      tag.setBoolean(UpgradeTags.TAG_UPGRADE_AUTO_EXPORT_ITEMS, this.autoExportItems.get());
+      tag.setBoolean(UpgradeTags.TAG_UPGRADE_AUTO_IMPORT_ITEMS, this.autoImportItems.get());
+      tag.setBoolean(UpgradeTags.TAG_UPGRADE_AUTO_IMPORT_FLUIDS, this.autoImportFluids.get());
       return tag;
     }
 
     @Override
     public void deserializeNBT(NBTTagCompound tag) {
 
-      this.speed.set(tag.getFloat(Tags.TAG_UPGRADE_SPEED));
-      this.energyUsage.set(tag.getFloat(Tags.TAG_UPGRADE_ENERGY_USAGE));
-      this.fluidCapacity.set(tag.getFloat(Tags.TAG_UPGRADE_FLUID_CAPACITY));
-      this.energyCapacity.set(tag.getFloat(Tags.TAG_UPGRADE_ENERGY_CAPACITY));
-      this.autoExportItems.set(tag.getBoolean(Tags.TAG_UPGRADE_AUTO_EXPORT_ITEMS));
-      this.autoImportItems.set(tag.getBoolean(Tags.TAG_UPGRADE_AUTO_IMPORT_ITEMS));
-      this.autoImportFluids.set(tag.getBoolean(Tags.TAG_UPGRADE_AUTO_IMPORT_FLUIDS));
+      this.speed.set(tag.getFloat(UpgradeTags.TAG_UPGRADE_SPEED));
+      this.energyUsage.set(tag.getFloat(UpgradeTags.TAG_UPGRADE_ENERGY_USAGE));
+      this.fluidCapacity.set(tag.getFloat(UpgradeTags.TAG_UPGRADE_FLUID_CAPACITY));
+      this.energyCapacity.set(tag.getFloat(UpgradeTags.TAG_UPGRADE_ENERGY_CAPACITY));
+      this.autoExportItems.set(tag.getBoolean(UpgradeTags.TAG_UPGRADE_AUTO_EXPORT_ITEMS));
+      this.autoImportItems.set(tag.getBoolean(UpgradeTags.TAG_UPGRADE_AUTO_IMPORT_ITEMS));
+      this.autoImportFluids.set(tag.getBoolean(UpgradeTags.TAG_UPGRADE_AUTO_IMPORT_FLUIDS));
     }
 
     public void registerNetwork(List<ITileData> tileDataList) {
@@ -510,20 +510,20 @@ public class TileAutomator
           continue;
         }
 
-        this.speed.set(this.speed.get() + upgradeTag.getFloat(Tags.TAG_UPGRADE_SPEED));
-        this.energyUsage.set(this.energyUsage.get() + upgradeTag.getFloat(Tags.TAG_UPGRADE_ENERGY_USAGE));
-        this.fluidCapacity.set(this.fluidCapacity.get() + upgradeTag.getFloat(Tags.TAG_UPGRADE_FLUID_CAPACITY));
-        this.energyCapacity.set(this.energyCapacity.get() + upgradeTag.getFloat(Tags.TAG_UPGRADE_ENERGY_CAPACITY));
+        this.speed.set(this.speed.get() + upgradeTag.getFloat(UpgradeTags.TAG_UPGRADE_SPEED));
+        this.energyUsage.set(this.energyUsage.get() + upgradeTag.getFloat(UpgradeTags.TAG_UPGRADE_ENERGY_USAGE));
+        this.fluidCapacity.set(this.fluidCapacity.get() + upgradeTag.getFloat(UpgradeTags.TAG_UPGRADE_FLUID_CAPACITY));
+        this.energyCapacity.set(this.energyCapacity.get() + upgradeTag.getFloat(UpgradeTags.TAG_UPGRADE_ENERGY_CAPACITY));
 
-        if (upgradeTag.getBoolean(Tags.TAG_UPGRADE_AUTO_EXPORT_ITEMS)) {
+        if (upgradeTag.getBoolean(UpgradeTags.TAG_UPGRADE_AUTO_EXPORT_ITEMS)) {
           this.autoExportItems.set(true);
         }
 
-        if (upgradeTag.getBoolean(Tags.TAG_UPGRADE_AUTO_IMPORT_ITEMS)) {
+        if (upgradeTag.getBoolean(UpgradeTags.TAG_UPGRADE_AUTO_IMPORT_ITEMS)) {
           this.autoImportItems.set(true);
         }
 
-        if (upgradeTag.getBoolean(Tags.TAG_UPGRADE_AUTO_IMPORT_FLUIDS)) {
+        if (upgradeTag.getBoolean(UpgradeTags.TAG_UPGRADE_AUTO_IMPORT_FLUIDS)) {
           this.autoImportFluids.set(true);
         }
       }

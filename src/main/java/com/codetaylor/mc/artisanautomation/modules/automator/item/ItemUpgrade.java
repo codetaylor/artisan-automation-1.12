@@ -1,5 +1,6 @@
 package com.codetaylor.mc.artisanautomation.modules.automator.item;
 
+import com.codetaylor.mc.artisanautomation.modules.automator.reference.UpgradeTags;
 import com.codetaylor.mc.artisanworktables.api.internal.reference.Tags;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -37,7 +38,7 @@ public class ItemUpgrade
 
     NBTTagCompound artisanTag = itemTag.getCompoundTag(Tags.TAG_ARTISAN_WORKTABLES);
 
-    if (!artisanTag.hasKey(Tags.TAG_UPGRADE)) {
+    if (!artisanTag.hasKey(UpgradeTags.TAG_UPGRADE)) {
       return false;
     }
 
@@ -51,7 +52,7 @@ public class ItemUpgrade
       NBTTagCompound itemTag = itemStack.getTagCompound();
       return (itemTag == null) ? null : itemTag
           .getCompoundTag(Tags.TAG_ARTISAN_WORKTABLES)
-          .getCompoundTag(Tags.TAG_UPGRADE);
+          .getCompoundTag(UpgradeTags.TAG_UPGRADE);
     }
 
     return null;
