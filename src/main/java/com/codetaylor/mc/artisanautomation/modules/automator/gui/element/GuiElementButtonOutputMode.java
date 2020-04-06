@@ -75,21 +75,21 @@ public class GuiElementButtonOutputMode
 
     switch (outputMode) {
       case Keep:
-        modeKey = "item.artisanautomation.tooltip.automator.output.slot.mode.keep";
+        modeKey = "tooltip.artisanautomation.automator.output.slot.mode.keep";
         break;
       case Manual:
-        modeKey = "item.artisanautomation.tooltip.automator.output.slot.mode.manual";
+        modeKey = "tooltip.artisanautomation.automator.output.slot.mode.manual";
         break;
       case Inventory:
-        modeKey = "item.artisanautomation.tooltip.automator.output.slot.mode.inventory";
+        modeKey = "tooltip.artisanautomation.automator.output.slot.mode.inventory";
         break;
       case Export:
-        modeKey = "item.artisanautomation.tooltip.automator.output.slot.mode.export";
+        modeKey = "tooltip.artisanautomation.automator.output.slot.mode.export";
         break;
     }
 
     tooltip.add(I18n.format(
-        "item.artisanautomation.tooltip.automator.output.slot.mode",
+        "tooltip.artisanautomation.automator.output.slot.mode",
         I18n.format(modeKey)
     ));
 
@@ -104,16 +104,16 @@ public class GuiElementButtonOutputMode
 
     switch (outputMode) {
       case Keep:
-        infoKey = "item.artisanautomation.tooltip.automator.output.slot.mode.keep.info";
+        infoKey = "tooltip.artisanautomation.automator.output.slot.mode.keep.info";
         break;
       case Manual:
-        infoKey = "item.artisanautomation.tooltip.automator.output.slot.mode.manual.info";
+        infoKey = "tooltip.artisanautomation.automator.output.slot.mode.manual.info";
         break;
       case Inventory:
-        infoKey = "item.artisanautomation.tooltip.automator.output.slot.mode.inventory.info";
+        infoKey = "tooltip.artisanautomation.automator.output.slot.mode.inventory.info";
         break;
       case Export:
-        infoKey = "item.artisanautomation.tooltip.automator.output.slot.mode.export.info";
+        infoKey = "tooltip.artisanautomation.automator.output.slot.mode.export.info";
         break;
     }
 
