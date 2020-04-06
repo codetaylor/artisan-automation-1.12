@@ -10,7 +10,7 @@ public final class TooltipUtil {
     String prefix = (autoExportItems) ? TextFormatting.DARK_GREEN.toString() : TextFormatting.DARK_RED.toString();
 
     return I18n.format(
-        "tooltip.artisanworktables.automator.upgrade.auto.export.items",
+        "tooltip.artisanautomation.automator.upgrade.auto.export.items",
         prefix + autoExportItems
     );
   }
@@ -20,7 +20,7 @@ public final class TooltipUtil {
     String prefix = (autoExportItems) ? TextFormatting.DARK_GREEN.toString() : TextFormatting.DARK_RED.toString();
 
     return I18n.format(
-        "tooltip.artisanworktables.automator.upgrade.auto.import.items",
+        "tooltip.artisanautomation.automator.upgrade.auto.import.items",
         prefix + autoExportItems
     );
   }
@@ -30,7 +30,7 @@ public final class TooltipUtil {
     String prefix = TooltipUtil.getPrefix(speedModifier, isUpgrade);
 
     return I18n.format(
-        "tooltip.artisanworktables.automator.upgrade.speed",
+        "tooltip.artisanautomation.automator.upgrade.speed",
         prefix + speedModifier
     );
   }
@@ -40,7 +40,7 @@ public final class TooltipUtil {
     String prefix = TooltipUtil.getPrefixInverse(energyUsageModifier, isUpgrade);
 
     return I18n.format(
-        "tooltip.artisanworktables.automator.upgrade.energy.usage",
+        "tooltip.artisanautomation.automator.upgrade.energy.usage",
         prefix + energyUsageModifier
     );
   }
@@ -50,7 +50,7 @@ public final class TooltipUtil {
     String prefix = TooltipUtil.getPrefix(fluidCapacityModifier, isUpgrade);
 
     return I18n.format(
-        "tooltip.artisanworktables.automator.upgrade.fluid.capacity",
+        "tooltip.artisanautomation.automator.upgrade.fluid.capacity",
         prefix + fluidCapacityModifier
     );
   }
@@ -60,7 +60,7 @@ public final class TooltipUtil {
     String prefix = TooltipUtil.getPrefix(energyCapacityModifier, isUpgrade);
 
     return I18n.format(
-        "tooltip.artisanworktables.automator.upgrade.energy.capacity",
+        "tooltip.artisanautomation.automator.upgrade.energy.capacity",
         prefix + energyCapacityModifier
     );
   }
