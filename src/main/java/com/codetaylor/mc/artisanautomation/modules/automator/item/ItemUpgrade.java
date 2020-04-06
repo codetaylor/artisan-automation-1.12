@@ -16,6 +16,7 @@ public class ItemUpgrade
   public static final String NAME_AUTO_EXPORT_ITEMS = "upgrade_auto_export_items";
   public static final String NAME_AUTO_IMPORT_ITEMS = "upgrade_auto_import_items";
   public static final String NAME_AUTO_IMPORT_EXPORT_ITEMS = "upgrade_auto_import_export_items";
+  public static final String NAME_AUTO_IMPORT_FLUIDS = "upgrade_auto_import_fluids";
 
   public ItemUpgrade() {
 
