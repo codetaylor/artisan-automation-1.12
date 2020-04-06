@@ -54,9 +54,6 @@ public class ModuleAutomator
       AUTOMATOR = null;
       AUTOMATOR_POWER_RF = null;
     }
-//    public static final BlockWorktable WORKTABLE = new BlockWorktable();
-//    public static final BlockWorkstation WORKSTATION = new BlockWorkstation();
-//    public static final BlockWorkshop WORKSHOP = new BlockWorkshop();
   }
 
   @GameRegistry.ObjectHolder(ModuleAutomator.MOD_ID)
@@ -77,12 +74,16 @@ public class ModuleAutomator
     @GameRegistry.ObjectHolder(ItemUpgrade.NAME_AUTO_IMPORT_ITEMS)
     public static final ItemUpgrade UPGRADE_AUTO_IMPORT_ITEMS;
 
+    @GameRegistry.ObjectHolder(ItemUpgrade.NAME_AUTO_IMPORT_EXPORT_ITEMS)
+    public static final ItemUpgrade UPGRADE_AUTO_IMPORT_EXPORT_ITEMS;
+
     static {
       UPGRADE_SPEED = null;
       UPGRADE_FLUID_CAPACITY = null;
       UPGRADE_ENERGY_CAPACITY = null;
       UPGRADE_AUTO_EXPORT_ITEMS = null;
       UPGRADE_AUTO_IMPORT_ITEMS = null;
+      UPGRADE_AUTO_IMPORT_EXPORT_ITEMS = null;
     }
   }
 
@@ -171,6 +172,7 @@ public class ModuleAutomator
     registry.registerItem(new ItemUpgrade(), ItemUpgrade.NAME_ENERGY_CAPACITY);
     registry.registerItem(new ItemUpgrade(), ItemUpgrade.NAME_AUTO_EXPORT_ITEMS);
     registry.registerItem(new ItemUpgrade(), ItemUpgrade.NAME_AUTO_IMPORT_ITEMS);
+    registry.registerItem(new ItemUpgrade(), ItemUpgrade.NAME_AUTO_IMPORT_EXPORT_ITEMS);
 
     //noinspection unchecked
     this.registerTileEntities(
@@ -217,7 +219,8 @@ public class ModuleAutomator
           Items.UPGRADE_FLUID_CAPACITY,
           Items.UPGRADE_ENERGY_CAPACITY,
           Items.UPGRADE_AUTO_EXPORT_ITEMS,
-          Items.UPGRADE_AUTO_IMPORT_ITEMS
+          Items.UPGRADE_AUTO_IMPORT_ITEMS,
+          Items.UPGRADE_AUTO_IMPORT_EXPORT_ITEMS
       );
     });
   }
