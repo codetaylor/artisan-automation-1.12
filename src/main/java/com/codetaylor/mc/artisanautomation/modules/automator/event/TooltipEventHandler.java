@@ -63,14 +63,14 @@ public class TooltipEventHandler {
         }
       }
 
+      if (upgradeTag.hasKey(Tags.TAG_UPGRADE_AUTO_IMPORT_ITEMS)) {
+        boolean autoImportItems = upgradeTag.getBoolean(Tags.TAG_UPGRADE_AUTO_IMPORT_ITEMS);
+        tooltip.add(TextFormatting.GRAY + TooltipUtil.getAutoImportItemsString(autoImportItems));
+      }
+
       if (upgradeTag.hasKey(Tags.TAG_UPGRADE_AUTO_EXPORT_ITEMS)) {
         boolean autoExportItems = upgradeTag.getBoolean(Tags.TAG_UPGRADE_AUTO_EXPORT_ITEMS);
         tooltip.add(TextFormatting.GRAY + TooltipUtil.getAutoExportItemsString(autoExportItems));
-      }
-
-      if (upgradeTag.hasKey(Tags.TAG_UPGRADE_AUTO_IMPORT_ITEMS)) {
-        boolean autoExportItems = upgradeTag.getBoolean(Tags.TAG_UPGRADE_AUTO_IMPORT_ITEMS);
-        tooltip.add(TextFormatting.GRAY + TooltipUtil.getAutoImportItemsString(autoExportItems));
       }
 
       if (upgradeTag.hasKey(Tags.TAG_UPGRADE_AUTO_IMPORT_FLUIDS)) {
