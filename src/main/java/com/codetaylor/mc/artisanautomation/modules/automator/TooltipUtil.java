@@ -25,6 +25,16 @@ public final class TooltipUtil {
     );
   }
 
+  public static String getAutoImportFluidsString(boolean autoExportItems) {
+
+    String prefix = (autoExportItems) ? TextFormatting.DARK_GREEN.toString() : TextFormatting.DARK_RED.toString();
+
+    return I18n.format(
+        "tooltip.artisanautomation.automator.upgrade.auto.import.fluids",
+        prefix + autoExportItems
+    );
+  }
+
   public static String getSpeedString(int speedModifier, boolean isUpgrade) {
 
     String prefix = TooltipUtil.getPrefix(speedModifier, isUpgrade);

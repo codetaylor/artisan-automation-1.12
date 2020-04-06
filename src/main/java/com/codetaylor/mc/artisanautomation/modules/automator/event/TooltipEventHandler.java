@@ -73,6 +73,11 @@ public class TooltipEventHandler {
         tooltip.add(TextFormatting.GRAY + TooltipUtil.getAutoImportItemsString(autoExportItems));
       }
 
+      if (upgradeTag.hasKey(Tags.TAG_UPGRADE_AUTO_IMPORT_FLUIDS)) {
+        boolean autoImportFluids = upgradeTag.getBoolean(Tags.TAG_UPGRADE_AUTO_IMPORT_FLUIDS);
+        tooltip.add(TextFormatting.GRAY + TooltipUtil.getAutoImportFluidsString(autoImportFluids));
+      }
+
     } else {
       tooltip.add(TooltipHelper.tooltipHoldShiftStringGet());
     }
