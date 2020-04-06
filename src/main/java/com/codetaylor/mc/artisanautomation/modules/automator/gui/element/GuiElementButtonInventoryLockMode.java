@@ -67,10 +67,10 @@ public class GuiElementButtonInventoryLockMode
     String langKey;
 
     if (isLocked) {
-      langKey = "tooltip.artisanworktables.automator.inventory.locked";
+      langKey = "tooltip.artisanautomation.automator.inventory.locked";
 
     } else {
-      langKey = "tooltip.artisanworktables.automator.inventory.unlocked";
+      langKey = "tooltip.artisanautomation.automator.inventory.unlocked";
     }
 
     tooltip.add(I18n.format(langKey));
@@ -85,10 +85,10 @@ public class GuiElementButtonInventoryLockMode
     String langKey;
 
     if (isLocked) {
-      langKey = "tooltip.artisanworktables.automator.inventory.locked.info";
+      langKey = "tooltip.artisanautomation.automator.inventory.locked.info";
 
     } else {
-      langKey = "tooltip.artisanworktables.automator.inventory.unlocked.info";
+      langKey = "tooltip.artisanautomation.automator.inventory.unlocked.info";
     }
 
     tooltip.add(TextFormatting.GRAY + I18n.format(langKey));

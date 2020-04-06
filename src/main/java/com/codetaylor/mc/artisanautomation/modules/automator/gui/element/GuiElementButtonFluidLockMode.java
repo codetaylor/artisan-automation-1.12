@@ -70,10 +70,10 @@ public class GuiElementButtonFluidLockMode
     String langKey;
 
     if (isLocked) {
-      langKey = "tooltip.artisanworktables.automator.fluid.locked";
+      langKey = "tooltip.artisanautomation.automator.fluid.locked";
 
     } else {
-      langKey = "tooltip.artisanworktables.automator.fluid.unlocked";
+      langKey = "tooltip.artisanautomation.automator.fluid.unlocked";
     }
 
     tooltip.add(I18n.format(langKey));
@@ -88,10 +88,10 @@ public class GuiElementButtonFluidLockMode
     String langKey;
 
     if (isLocked) {
-      langKey = "tooltip.artisanworktables.automator.fluid.locked.info";
+      langKey = "tooltip.artisanautomation.automator.fluid.locked.info";
 
     } else {
-      langKey = "tooltip.artisanworktables.automator.fluid.unlocked.info";
+      langKey = "tooltip.artisanautomation.automator.fluid.unlocked.info";
     }
 
     tooltip.add(TextFormatting.GRAY + I18n.format(langKey));

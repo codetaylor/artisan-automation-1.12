@@ -75,21 +75,21 @@ public class GuiElementButtonOutputMode
 
     switch (outputMode) {
       case Keep:
-        modeKey = "item.artisanworktables.tooltip.automator.output.slot.mode.keep";
+        modeKey = "item.artisanautomation.tooltip.automator.output.slot.mode.keep";
         break;
       case Manual:
-        modeKey = "item.artisanworktables.tooltip.automator.output.slot.mode.manual";
+        modeKey = "item.artisanautomation.tooltip.automator.output.slot.mode.manual";
         break;
       case Inventory:
-        modeKey = "item.artisanworktables.tooltip.automator.output.slot.mode.inventory";
+        modeKey = "item.artisanautomation.tooltip.automator.output.slot.mode.inventory";
         break;
       case Export:
-        modeKey = "item.artisanworktables.tooltip.automator.output.slot.mode.export";
+        modeKey = "item.artisanautomation.tooltip.automator.output.slot.mode.export";
         break;
     }
 
     tooltip.add(I18n.format(
-        "item.artisanworktables.tooltip.automator.output.slot.mode",
+        "item.artisanautomation.tooltip.automator.output.slot.mode",
         I18n.format(modeKey)
     ));
 
@@ -104,16 +104,16 @@ public class GuiElementButtonOutputMode
 
     switch (outputMode) {
       case Keep:
-        infoKey = "item.artisanworktables.tooltip.automator.output.slot.mode.keep.info";
+        infoKey = "item.artisanautomation.tooltip.automator.output.slot.mode.keep.info";
         break;
       case Manual:
-        infoKey = "item.artisanworktables.tooltip.automator.output.slot.mode.manual.info";
+        infoKey = "item.artisanautomation.tooltip.automator.output.slot.mode.manual.info";
         break;
       case Inventory:
-        infoKey = "item.artisanworktables.tooltip.automator.output.slot.mode.inventory.info";
+        infoKey = "item.artisanautomation.tooltip.automator.output.slot.mode.inventory.info";
         break;
       case Export:
-        infoKey = "item.artisanworktables.tooltip.automator.output.slot.mode.export.info";
+        infoKey = "item.artisanautomation.tooltip.automator.output.slot.mode.export.info";
         break;
     }
 

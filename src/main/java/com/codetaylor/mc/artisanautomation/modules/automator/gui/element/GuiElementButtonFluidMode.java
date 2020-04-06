@@ -71,15 +71,15 @@ public class GuiElementButtonFluidMode
 
     switch (mode) {
       case Fill:
-        modeKey = "tooltip.artisanworktables.automator.fluid.mode.fill";
+        modeKey = "tooltip.artisanautomation.automator.fluid.mode.fill";
         break;
       case Drain:
-        modeKey = "tooltip.artisanworktables.automator.fluid.mode.drain";
+        modeKey = "tooltip.artisanautomation.automator.fluid.mode.drain";
         break;
     }
 
     tooltip.add(I18n.format(
-        "tooltip.artisanworktables.automator.fluid.mode",
+        "tooltip.artisanautomation.automator.fluid.mode",
         I18n.format(modeKey)
     ));
 
@@ -94,10 +94,10 @@ public class GuiElementButtonFluidMode
 
     switch (mode) {
       case Fill:
-        infoKey = "tooltip.artisanworktables.automator.fluid.mode.fill.info";
+        infoKey = "tooltip.artisanautomation.automator.fluid.mode.fill.info";
         break;
       case Drain:
-        infoKey = "tooltip.artisanworktables.automator.fluid.mode.drain.info";
+        infoKey = "tooltip.artisanautomation.automator.fluid.mode.drain.info";
         break;
     }
 

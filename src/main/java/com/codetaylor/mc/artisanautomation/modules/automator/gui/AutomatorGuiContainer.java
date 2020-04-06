@@ -274,7 +274,7 @@ public class AutomatorGuiContainer
     // title
     this.guiContainerElementAdd(new GuiElementTitle(
         this,
-        "tile.artisanworktables.automator.name",
+        "tile.artisanautomation.automator.name",
         8,
         7
     ));
