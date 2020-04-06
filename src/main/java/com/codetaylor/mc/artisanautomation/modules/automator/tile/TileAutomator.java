@@ -19,8 +19,6 @@ import com.codetaylor.mc.artisanautomation.modules.automator.Util;
 import com.codetaylor.mc.artisanautomation.modules.automator.gui.AutomatorContainer;
 import com.codetaylor.mc.artisanautomation.modules.automator.gui.AutomatorGuiContainer;
 import com.codetaylor.mc.artisanautomation.modules.automator.item.ItemUpgrade;
-import com.codetaylor.mc.artisanautomation.modules.automator.tile.AutomatorCraftingContext;
-import com.codetaylor.mc.artisanautomation.modules.automator.tile.ITileAutomatorPowerConsumer;
 import com.codetaylor.mc.artisanworktables.modules.toolbox.ModuleToolbox;
 import com.codetaylor.mc.artisanworktables.modules.toolbox.ModuleToolboxConfig;
 import com.codetaylor.mc.artisanworktables.modules.worktables.block.BlockBase;
@@ -190,8 +188,10 @@ public class TileAutomator
   private final FluidCapabilityWrapper fluidCapabilityWrapper;
   private ICraftingMatrixStackHandler craftingMatrixStackHandler;
   private final Stats stats;
-  private static final int AUTO_IMPORT_TICK_INTERVAL = 20;
-  private int autoImportTickCount;
+  private static final int AUTO_IMPORT_ITEMS_TICK_INTERVAL = 20;
+  private int autoImportItemsTickCount;
+  private static final int AUTO_IMPORT_FLUIDS_TICK_INTERVAL = 20;
+  private int autoImportFluidsTickCount;
 
   // ---------------------------------------------------------------------------
   // Constructor
@@ -332,6 +332,9 @@ public class TileAutomator
     this.toolboxStackHandler.addObserver((stackHandler, slotIndex) -> this.markDirty());
 
     // internal
+
+    this.autoImportItemsTickCount = 0;
+    this.autoImportFluidsTickCount = 10; // offset from item import
 
     this.itemCapabilityWrapper = new ItemCapabilityWrapper(
         this.inventoryItemStackHandler,
@@ -881,8 +884,60 @@ public class TileAutomator
     this.updateBuckets();
     this.exportItems();
     this.importItems();
+    this.importFluids();
 
     this.progress.set(this.tickCounter / (float) ModuleAutomatorConfig.MECHANICAL_ARTISAN.TICKS_PER_CRAFT);
+  }
+
+  private void importFluids() {
+
+    if (!this.stats.getAutoImportFluids().get()) {
+      return;
+    }
+
+    this.autoImportFluidsTickCount += 1;
+
+    if (this.autoImportFluidsTickCount < AUTO_IMPORT_FLUIDS_TICK_INTERVAL) {
+      return;
+    }
+
+    this.autoImportFluidsTickCount = 0;
+
+    BlockPos down = this.getPos().down();
+    IFluidHandler localFluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN);
+
+    if (localFluidHandler == null) {
+      return;
+    }
+
+    for (int i = 0; i < EnumFacing.HORIZONTALS.length; i++) {
+      TileEntity tileEntity = this.world.getTileEntity(down.offset(EnumFacing.HORIZONTALS[i]));
+
+      if (tileEntity == null) {
+        continue;
+      }
+
+      IFluidHandler fluidHandler = tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.HORIZONTALS[i].getOpposite());
+
+      if (fluidHandler == null) {
+        continue;
+      }
+
+      FluidStack drain = fluidHandler.drain(1000, false);
+
+      if (drain == null || drain.amount == 0) {
+        continue;
+      }
+
+      int fill = localFluidHandler.fill(drain, true);
+
+      if (fill == 0) {
+        continue;
+      }
+
+      fluidHandler.drain(fill, true);
+      break;
+    }
   }
 
   private void importItems() {
@@ -891,13 +946,13 @@ public class TileAutomator
       return;
     }
 
-    this.autoImportTickCount += 1;
+    this.autoImportItemsTickCount += 1;
 
-    if (this.autoImportTickCount < AUTO_IMPORT_TICK_INTERVAL) {
+    if (this.autoImportItemsTickCount < AUTO_IMPORT_ITEMS_TICK_INTERVAL) {
       return;
     }
 
-    this.autoImportTickCount = 0;
+    this.autoImportItemsTickCount = 0;
 
     BlockPos down = this.getPos().down();
     IItemHandler inventoryHandler = this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
