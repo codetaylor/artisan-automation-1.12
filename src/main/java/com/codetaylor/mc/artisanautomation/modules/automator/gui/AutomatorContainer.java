@@ -124,7 +124,7 @@ public class AutomatorContainer
       this.containerSlotAdd(new ToolUpgradePanelSlot(
           () -> this.state, EnumState.Tool,
           () -> !this.tile.getToolboxStackHandler().getStackInSlot(0).isEmpty(),
-          this.tile.getToolUpgradeStackHandler(), 0, 8 + i * 18, 56
+          this.tile.getToolUpgradeStackHandler(), i, 8 + i * 18, 56
       ));
     }
   }
