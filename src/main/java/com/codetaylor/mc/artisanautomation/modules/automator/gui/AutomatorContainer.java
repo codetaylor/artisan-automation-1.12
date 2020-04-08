@@ -1,9 +1,6 @@
 package com.codetaylor.mc.artisanautomation.modules.automator.gui;
 
-import com.codetaylor.mc.artisanautomation.modules.automator.gui.slot.OutputPanelSlot;
-import com.codetaylor.mc.artisanautomation.modules.automator.gui.slot.PanelSlot;
-import com.codetaylor.mc.artisanautomation.modules.automator.gui.slot.TableSlot;
-import com.codetaylor.mc.artisanautomation.modules.automator.gui.slot.ToolUpgradePanelSlot;
+import com.codetaylor.mc.artisanautomation.modules.automator.gui.slot.*;
 import com.codetaylor.mc.artisanautomation.modules.automator.tile.TileAutomator;
 import com.codetaylor.mc.athenaeum.gui.ContainerBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -115,9 +112,12 @@ public class AutomatorContainer
       ));
     }
 
-    this.containerSlotAdd(new PanelSlot(
+    this.containerSlotAdd(new ToolBoxPanelSlot(
         () -> this.state, EnumState.Tool,
-        this.tile.getToolboxStackHandler(), 0, 8 + 7 * 18, 56
+        this.tile.getToolboxStackHandler(),
+        this.tile.getToolUpgradeStackHandler(),
+        this.tile.getPos(),
+        inventoryPlayer.player, 0, 8 + 7 * 18, 56
     ));
 
     for (int i = 0; i < 6; i++) {
