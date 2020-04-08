@@ -20,6 +20,7 @@ tooltip.artisanautomation.automator.upgrade.energy.capacity=Energy Capacity: %d%
 tooltip.artisanautomation.automator.upgrade.auto.export.items=Auto-Export Items: %s
 tooltip.artisanautomation.automator.upgrade.auto.import.items=Auto-Import Items: %s
 tooltip.artisanautomation.automator.upgrade.auto.import.fluids=Auto-Import Fluids: %s
+tooltip.artisanautomation.automator.upgrade.tool.repair.durability=Durability Repaired: %d%%
 
 # Tooltip
 tooltip.artisanautomation.automator.output.slot.mode=Mode: %s

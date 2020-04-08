@@ -75,6 +75,14 @@ public final class TooltipUtil {
     );
   }
 
+  public static String getDurabilityRepairedString(int durabilityPercentage) {
+
+    return I18n.format(
+        "tooltip.artisanautomation.automator.upgrade.tool.repair.durability",
+        TextFormatting.DARK_GREEN.toString() + durabilityPercentage
+    );
+  }
+
   private static String getPrefix(int modifier, boolean isUpgrade) {
 
     String prefix = "";
