@@ -179,6 +179,7 @@ public class TileAutomator
 
   private final ToolStackHandler toolStackHandler;
   private final ToolboxStackHandler toolboxStackHandler;
+  private final ToolUpgradeStackHandler toolUpgradeStackHandler;
 
   // ---------------------------------------------------------------------------
   // Internal
@@ -330,6 +331,9 @@ public class TileAutomator
 
     this.toolboxStackHandler = new ToolboxStackHandler();
     this.toolboxStackHandler.addObserver((stackHandler, slotIndex) -> this.markDirty());
+
+    this.toolUpgradeStackHandler = new ToolUpgradeStackHandler();
+    this.toolUpgradeStackHandler.addObserver((stackHandler, slotIndex) -> this.markDirty());
 
     // internal
 
@@ -698,6 +702,11 @@ public class TileAutomator
   public ToolboxStackHandler getToolboxStackHandler() {
 
     return this.toolboxStackHandler;
+  }
+
+  public ToolUpgradeStackHandler getToolUpgradeStackHandler() {
+
+    return this.toolUpgradeStackHandler;
   }
 
   public Stats getStats() {
@@ -2131,6 +2140,26 @@ public class TileAutomator
     public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
 
       return ArtisanAPI.containsRecipeWithTool(stack);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // - Tool Upgrade Stack Handler
+  // ---------------------------------------------------------------------------
+
+  public static class ToolUpgradeStackHandler
+      extends ObservableStackHandler
+      implements ITileDataItemStackHandler {
+
+    public ToolUpgradeStackHandler() {
+
+      super(6);
+    }
+
+    @Override
+    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+
+      return ItemUpgrade.isToolUpgrade(stack);
     }
   }
 

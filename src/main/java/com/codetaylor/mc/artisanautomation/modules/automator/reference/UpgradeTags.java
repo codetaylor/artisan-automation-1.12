@@ -11,4 +11,6 @@ public class UpgradeTags {
   public static final String TAG_UPGRADE_AUTO_IMPORT_ITEMS = "AutoImportItems";
   public static final String TAG_UPGRADE_AUTO_IMPORT_FLUIDS = "AutoImportFluids";
 
+  public static final String TAG_TOOL_UPGRADE = "ToolUpgrade";
+
 }

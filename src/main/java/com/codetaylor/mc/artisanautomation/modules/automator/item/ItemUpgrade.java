@@ -57,4 +57,39 @@ public class ItemUpgrade
 
     return null;
   }
+
+  public static boolean isToolUpgrade(ItemStack itemStack) {
+
+    NBTTagCompound itemTag = itemStack.getTagCompound();
+
+    if (itemStack.isEmpty() || itemTag == null) {
+      return false;
+    }
+
+    if (!itemTag.hasKey(Tags.TAG_ARTISAN_WORKTABLES)) {
+      return false;
+    }
+
+    NBTTagCompound artisanTag = itemTag.getCompoundTag(Tags.TAG_ARTISAN_WORKTABLES);
+
+    if (!artisanTag.hasKey(UpgradeTags.TAG_TOOL_UPGRADE)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  @Nullable
+  public static NBTTagCompound getToolUpgradeTag(ItemStack itemStack) {
+
+    if (ItemUpgrade.isToolUpgrade(itemStack)) {
+      NBTTagCompound itemTag = itemStack.getTagCompound();
+      return (itemTag == null) ? null : itemTag
+          .getCompoundTag(Tags.TAG_ARTISAN_WORKTABLES)
+          .getCompoundTag(UpgradeTags.TAG_TOOL_UPGRADE);
+    }
+
+    return null;
+  }
+
 }
