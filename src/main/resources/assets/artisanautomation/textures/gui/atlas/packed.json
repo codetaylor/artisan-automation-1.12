@@ -271,6 +271,13 @@
       "v": 19,
       "width": 20,
       "height": 19
+    },
+    "tool-upgrade-cap": {
+      "atlas": "textures/gui/atlas/atlas_automator_0.png",
+      "u": 208,
+      "v": 104,
+      "width": 16,
+      "height": 16
     }
   }
 }

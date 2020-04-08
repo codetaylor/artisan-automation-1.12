@@ -46,7 +46,23 @@ public class AutomatorGuiContainer
     this.createPatternPanelElements();
     this.createInventoryPanelElements();
     this.createFluidPanelElements();
+    this.createToolPanelElements();
     this.createSelectedTabElements();
+  }
+
+  private void createToolPanelElements() {
+
+    for (int i = 0; i < 6; i++) {
+      this.guiContainerElementAdd(new GuiElementToolCap(
+          this::getContainerState,
+          AutomatorContainer.EnumState.Tool,
+          () -> !this.tile.getToolboxStackHandler().getStackInSlot(0).isEmpty(),
+          this,
+          new Texture[]{this.getTexture("tool-upgrade-cap")},
+          8 + i * 18,
+          56
+      ));
+    }
   }
 
   private void createFluidPanelElements() {
