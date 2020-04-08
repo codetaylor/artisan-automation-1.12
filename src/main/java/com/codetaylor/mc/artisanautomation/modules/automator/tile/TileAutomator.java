@@ -796,6 +796,7 @@ public class TileAutomator
 
     compound.setTag("toolStackHandler", this.toolStackHandler.serializeNBT());
     compound.setTag("toolboxStackHandler", this.toolboxStackHandler.serializeNBT());
+    compound.setTag("toolUpgradeStackHandler", this.toolUpgradeStackHandler.serializeNBT());
 
     return compound;
   }
@@ -848,6 +849,7 @@ public class TileAutomator
 
     this.toolStackHandler.deserializeNBT(compound.getCompoundTag("toolStackHandler"));
     this.toolboxStackHandler.deserializeNBT(compound.getCompoundTag("toolboxStackHandler"));
+    this.toolUpgradeStackHandler.deserializeNBT(compound.getCompoundTag("toolUpgradeStackHandler"));
   }
 
   // ---------------------------------------------------------------------------
