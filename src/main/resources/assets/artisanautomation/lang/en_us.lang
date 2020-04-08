@@ -10,6 +10,7 @@ item.artisanautomation.upgrade.auto.export.items.name=Auto-Export Items Upgrade
 item.artisanautomation.upgrade.auto.import.items.name=Auto-Import Items Upgrade
 item.artisanautomation.upgrade.auto.import.export.items.name=Auto-Import / Export Items Upgrade
 item.artisanautomation.upgrade.auto.import.fluids.name=Auto-Import Fluids Upgrade
+item.artisanautomation.upgrade.tool.repair.name=Tool Repair Upgrade
 
 # Upgrade Item Tooltip
 tooltip.artisanautomation.automator.upgrade.speed=Speed: %d%%
