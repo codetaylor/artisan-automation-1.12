@@ -40,6 +40,10 @@ public class ToolBoxPanelSlot
 
     super.onSlotChanged();
 
+    if (this.player.world.isRemote) {
+      return;
+    }
+
     if (this.getItemHandler().getStackInSlot(0).isEmpty()) {
 
       for (int i = 0; i < this.toolUpgradeStackHandler.getSlots(); i++) {
