@@ -40,14 +40,10 @@ public class ToolBoxPanelSlot
 
     super.onSlotChanged();
 
-    if (this.player.world.isRemote) {
-      return;
-    }
-
     if (this.getItemHandler().getStackInSlot(0).isEmpty()) {
 
       for (int i = 0; i < this.toolUpgradeStackHandler.getSlots(); i++) {
-        ItemStack itemStack = this.toolUpgradeStackHandler.extractItem(i, 1, false);
+        ItemStack itemStack = this.toolUpgradeStackHandler.extractItem(i, 1, this.player.world.isRemote);
         StackHelper.addToInventoryOrSpawn(this.player.world, this.player, itemStack, this.pos, 1, false, true);
       }
     }
