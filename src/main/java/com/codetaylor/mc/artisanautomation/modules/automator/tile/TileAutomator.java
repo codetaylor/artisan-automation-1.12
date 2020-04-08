@@ -48,6 +48,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -891,6 +892,7 @@ public class TileAutomator
     if (this.tickCounter >= ModuleAutomatorConfig.MECHANICAL_ARTISAN.TICKS_PER_CRAFT) {
       this.tickCounter = 0;
       this.doCrafting();
+      this.repairTools();
     }
 
     this.updateOutputStacks();
@@ -900,6 +902,72 @@ public class TileAutomator
     this.importFluids();
 
     this.progress.set(this.tickCounter / (float) ModuleAutomatorConfig.MECHANICAL_ARTISAN.TICKS_PER_CRAFT);
+  }
+
+  private void repairTools() {
+
+    if (this.toolboxStackHandler.getStackInSlot(0).isEmpty()) {
+      return;
+    }
+
+    for (int i = 0; i < 6; i++) {
+      ItemStack upgradeStack = this.toolUpgradeStackHandler.getStackInSlot(i);
+
+      if (upgradeStack.isEmpty()) {
+        continue;
+      }
+
+      NBTTagCompound toolUpgradeTag = ItemUpgrade.getToolUpgradeTag(upgradeStack);
+
+      if (toolUpgradeTag == null || toolUpgradeTag.getSize() == 0) {
+        continue;
+      }
+
+      float durabilityRepairPercentage = MathHelper.clamp(toolUpgradeTag.getFloat(UpgradeTags.TAG_TOOL_UPGRADE_DURABILITY_REPAIRED), 0, 1);
+
+      if (durabilityRepairPercentage == 0) {
+        continue;
+      }
+
+      float energyUsageModifier = Math.max(-1, toolUpgradeTag.getFloat(UpgradeTags.TAG_UPGRADE_ENERGY_USAGE));
+
+      this.repairTool(this.toolStackHandler, i, durabilityRepairPercentage, energyUsageModifier);
+      this.repairTool(this.toolStackHandler, i + 6, durabilityRepairPercentage, energyUsageModifier);
+    }
+  }
+
+  private void repairTool(ToolStackHandler stackHandler, int slot, float durabilityRepairPercentage, float energyUsageModifier) {
+
+    ItemStack toolStack = stackHandler.getStackInSlot(slot);
+
+    if (toolStack.isEmpty() || toolStack.getItemDamage() == 0 || !toolStack.getItem().isRepairable()) {
+      return;
+    }
+
+    int durabilityToRepair = (int) (durabilityRepairPercentage * toolStack.getMaxDamage());
+
+    if (durabilityToRepair > toolStack.getItemDamage()) {
+      return;
+    }
+
+    int energyToUse = (int) ((1 + energyUsageModifier) * durabilityToRepair);
+
+    if (this.getEnergyAmount() < energyToUse) {
+      return;
+    }
+
+    for (int i = 0; i < this.inventoryItemStackHandler.getSlots(); i++) {
+      ItemStack repairMaterial = this.inventoryItemStackHandler.getStackInSlot(i);
+
+      if (!repairMaterial.isEmpty() && toolStack.getItem().getIsRepairable(toolStack, repairMaterial)) {
+        ItemStack copy = toolStack.copy();
+        copy.setItemDamage(Math.max(0, toolStack.getItemDamage() - durabilityToRepair));
+        stackHandler.setStackInSlot(slot, copy);
+        this.energyStorage.extractEnergy(energyToUse, false);
+        this.inventoryItemStackHandler.extractItem(i, 1, false);
+        break;
+      }
+    }
   }
 
   private void importFluids() {
