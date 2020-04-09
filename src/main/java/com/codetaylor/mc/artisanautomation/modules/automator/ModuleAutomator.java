@@ -3,6 +3,7 @@ package com.codetaylor.mc.artisanautomation.modules.automator;
 import com.codetaylor.mc.artisanautomation.ModArtisanAutomation;
 import com.codetaylor.mc.artisanautomation.modules.automator.block.BlockAutomator;
 import com.codetaylor.mc.artisanautomation.modules.automator.block.BlockAutomatorPowerRF;
+import com.codetaylor.mc.artisanautomation.modules.automator.client.TESRAutomator;
 import com.codetaylor.mc.artisanautomation.modules.automator.event.TooltipEventHandler;
 import com.codetaylor.mc.artisanautomation.modules.automator.item.ItemUpgrade;
 import com.codetaylor.mc.artisanautomation.modules.automator.network.*;
@@ -24,6 +25,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -234,6 +236,8 @@ public class ModuleAutomator
           Items.UPGRADE_AUTO_IMPORT_FLUIDS,
           Items.UPGRADE_TOOL_REPAIR
       );
+
+      ClientRegistry.bindTileEntitySpecialRenderer(TileAutomator.class, new TESRAutomator());
     });
   }
 
