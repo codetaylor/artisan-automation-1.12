@@ -47,6 +47,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -1507,22 +1509,35 @@ public class TileAutomator
             && this.fluidHandlers[i].getFluidAmount() > 0) {
           // fill bucket
           int containerCapacity = capability.getTankProperties()[0].getCapacity();
+          FluidStack fluid = this.fluidHandlers[i].getFluid() != null ? this.fluidHandlers[i].getFluid().copy() : null;
           FluidActionResult fluidActionResult = FluidUtil.tryFillContainer(
               container, this.fluidHandlers[i], containerCapacity, null, true);
 
           if (fluidActionResult.success) {
             this.bucketItemStackHandler.setStackInSlot(i, fluidActionResult.result);
+
+            if (fluid != null) {
+              SoundEvent sound = fluid.getFluid().getFillSound(fluid);
+              this.world.playSound(null, this.pos, sound, SoundCategory.BLOCKS, 1, 1);
+            }
           }
 
         } else if (this.fluidMode.get(i).get() == EnumFluidMode.Fill
             && this.fluidHandlers[i].getFluidAmount() < this.fluidHandlers[i].getCapacity()) {
           // drain bucket
           int containerCapacity = capability.getTankProperties()[0].getCapacity();
+          FluidStack fluid = capability.drain(containerCapacity, false);
+          fluid = fluid != null ? fluid.copy() : null;
           FluidActionResult fluidActionResult = FluidUtil.tryEmptyContainer(
               container, this.fluidHandlers[i], containerCapacity, null, true);
 
           if (fluidActionResult.success) {
             this.bucketItemStackHandler.setStackInSlot(i, fluidActionResult.result);
+
+            if (fluid != null) {
+              SoundEvent sound = fluid.getFluid().getEmptySound(fluid);
+              this.world.playSound(null, this.pos, sound, SoundCategory.BLOCKS, 1, 1);
+            }
           }
         }
       }
