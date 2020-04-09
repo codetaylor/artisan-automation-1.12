@@ -731,19 +731,21 @@ public class TileAutomator
   @Override
   public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
 
-    if (capability == CapabilityEnergy.ENERGY
-        && facing == EnumFacing.DOWN) {
-      //noinspection unchecked
-      return (T) this.energyStorage;
+    if (facing == EnumFacing.DOWN) {
 
-    } else if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      //noinspection unchecked
-      return (T) this.itemCapabilityWrapper;
+      if (capability == CapabilityEnergy.ENERGY) {
+        //noinspection unchecked
+        return (T) this.energyStorage;
 
-    } else if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+      } else if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        //noinspection unchecked
+        return (T) this.itemCapabilityWrapper;
 
-      //noinspection unchecked
-      return (T) this.fluidCapabilityWrapper;
+      } else if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+
+        //noinspection unchecked
+        return (T) this.fluidCapabilityWrapper;
+      }
     }
 
     return null;
@@ -984,40 +986,49 @@ public class TileAutomator
 
     this.autoImportFluidsTickCount = 0;
 
-    BlockPos down = this.getPos().down();
     IFluidHandler localFluidHandler = this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN);
 
     if (localFluidHandler == null) {
       return;
     }
 
-    for (int i = 0; i < EnumFacing.HORIZONTALS.length; i++) {
-      TileEntity tileEntity = this.world.getTileEntity(down.offset(EnumFacing.HORIZONTALS[i]));
+    verticalSearch:
+    for (int j = 1; j < this.getPos().getY(); j++) {
+      BlockPos down = this.getPos().down(j);
+      TileEntity tileEntityDown = this.world.getTileEntity(down);
 
-      if (tileEntity == null) {
-        continue;
+      if (!(tileEntityDown instanceof ITileAutomatorBlock)) {
+        break;
       }
 
-      IFluidHandler fluidHandler = tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.HORIZONTALS[i].getOpposite());
+      for (int i = 0; i < EnumFacing.HORIZONTALS.length; i++) {
+        TileEntity tileEntity = this.world.getTileEntity(down.offset(EnumFacing.HORIZONTALS[i]));
 
-      if (fluidHandler == null) {
-        continue;
+        if (tileEntity == null) {
+          continue;
+        }
+
+        IFluidHandler fluidHandler = tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.HORIZONTALS[i].getOpposite());
+
+        if (fluidHandler == null) {
+          continue;
+        }
+
+        FluidStack drain = fluidHandler.drain(1000, false);
+
+        if (drain == null || drain.amount == 0) {
+          continue;
+        }
+
+        int fill = localFluidHandler.fill(drain, true);
+
+        if (fill == 0) {
+          continue;
+        }
+
+        fluidHandler.drain(fill, true);
+        break verticalSearch;
       }
-
-      FluidStack drain = fluidHandler.drain(1000, false);
-
-      if (drain == null || drain.amount == 0) {
-        continue;
-      }
-
-      int fill = localFluidHandler.fill(drain, true);
-
-      if (fill == 0) {
-        continue;
-      }
-
-      fluidHandler.drain(fill, true);
-      break;
     }
   }
 
@@ -1035,48 +1046,57 @@ public class TileAutomator
 
     this.autoImportItemsTickCount = 0;
 
-    BlockPos down = this.getPos().down();
     IItemHandler inventoryHandler = this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
 
     if (inventoryHandler == null) {
       return;
     }
 
-    for (int i = 0; i < EnumFacing.HORIZONTALS.length; i++) {
-      TileEntity tileEntity = this.world.getTileEntity(down.offset(EnumFacing.HORIZONTALS[i]));
+    verticalSearch:
+    for (int j = 1; j < this.getPos().getY(); j++) {
+      BlockPos down = this.getPos().down(j);
+      TileEntity tileEntityDown = this.world.getTileEntity(down);
 
-      if (tileEntity == null) {
-        continue;
+      if (!(tileEntityDown instanceof ITileAutomatorBlock)) {
+        break;
       }
 
-      IItemHandler itemHandler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.HORIZONTALS[i].getOpposite());
+      for (int i = 0; i < EnumFacing.HORIZONTALS.length; i++) {
+        TileEntity tileEntity = this.world.getTileEntity(down.offset(EnumFacing.HORIZONTALS[i]));
 
-      if (itemHandler == null) {
-        continue;
-      }
-
-      for (int j = 0; j < itemHandler.getSlots(); j++) {
-        ItemStack stackInSlot = itemHandler.getStackInSlot(j);
-
-        if (stackInSlot.isEmpty()) {
+        if (tileEntity == null) {
           continue;
         }
 
-        ItemStack itemStack = inventoryHandler.insertItem(0, stackInSlot.copy(), false);
+        IItemHandler itemHandler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.HORIZONTALS[i].getOpposite());
 
-        for (int k = 1; k < inventoryHandler.getSlots(); k++) {
-
-          if (!itemStack.isEmpty()) {
-            itemStack = inventoryHandler.insertItem(k, itemStack, false);
-
-          } else {
-            break;
-          }
+        if (itemHandler == null) {
+          continue;
         }
 
-        if (stackInSlot.getCount() != itemStack.getCount()) {
-          itemHandler.extractItem(j, stackInSlot.getCount() - itemStack.getCount(), false);
-          break;
+        for (int k = 0; k < itemHandler.getSlots(); k++) {
+          ItemStack stackInSlot = itemHandler.getStackInSlot(k);
+
+          if (stackInSlot.isEmpty()) {
+            continue;
+          }
+
+          ItemStack itemStack = inventoryHandler.insertItem(0, stackInSlot.copy(), false);
+
+          for (int l = 1; l < inventoryHandler.getSlots(); l++) {
+
+            if (!itemStack.isEmpty()) {
+              itemStack = inventoryHandler.insertItem(l, itemStack, false);
+
+            } else {
+              break;
+            }
+          }
+
+          if (stackInSlot.getCount() != itemStack.getCount()) {
+            itemHandler.extractItem(k, stackInSlot.getCount() - itemStack.getCount(), false);
+            break verticalSearch;
+          }
         }
       }
     }
@@ -1091,28 +1111,36 @@ public class TileAutomator
       }
 
       ItemStack stackInSlot = this.outputItemStackHandler[i].getStackInSlot(0);
-      BlockPos down = this.getPos().down();
 
-      searchLoop:
-      for (int j = 0; j < EnumFacing.HORIZONTALS.length; j++) {
-        TileEntity tileEntity = this.world.getTileEntity(down.offset(EnumFacing.HORIZONTALS[j]));
+      verticalSearch:
+      for (int l = 1; l < this.getPos().getY(); l++) {
+        BlockPos down = this.getPos().down(l);
+        TileEntity tileEntityDown = this.world.getTileEntity(down);
 
-        if (tileEntity == null) {
-          continue;
+        if (!(tileEntityDown instanceof ITileAutomatorBlock)) {
+          break;
         }
 
-        IItemHandler itemHandler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.HORIZONTALS[j].getOpposite());
+        for (int j = 0; j < EnumFacing.HORIZONTALS.length; j++) {
+          TileEntity tileEntity = this.world.getTileEntity(down.offset(EnumFacing.HORIZONTALS[j]));
 
-        if (itemHandler == null) {
-          continue;
-        }
+          if (tileEntity == null) {
+            continue;
+          }
 
-        for (int k = 0; k < itemHandler.getSlots(); k++) {
-          ItemStack itemStack = itemHandler.insertItem(k, stackInSlot, false);
+          IItemHandler itemHandler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.HORIZONTALS[j].getOpposite());
 
-          if (itemStack.getCount() != stackInSlot.getCount()) {
-            this.outputItemStackHandler[i].setStackInSlot(0, itemStack);
-            break searchLoop;
+          if (itemHandler == null) {
+            continue;
+          }
+
+          for (int k = 0; k < itemHandler.getSlots(); k++) {
+            ItemStack itemStack = itemHandler.insertItem(k, stackInSlot, false);
+
+            if (itemStack.getCount() != stackInSlot.getCount()) {
+              this.outputItemStackHandler[i].setStackInSlot(0, itemStack);
+              break verticalSearch;
+            }
           }
         }
       }

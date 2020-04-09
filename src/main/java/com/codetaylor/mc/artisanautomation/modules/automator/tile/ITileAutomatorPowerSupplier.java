@@ -1,5 +1,6 @@
 package com.codetaylor.mc.artisanautomation.modules.automator.tile;
 
-public interface ITileAutomatorPowerSupplier {
+public interface ITileAutomatorPowerSupplier
+    extends ITileAutomatorBlock {
   //
 }

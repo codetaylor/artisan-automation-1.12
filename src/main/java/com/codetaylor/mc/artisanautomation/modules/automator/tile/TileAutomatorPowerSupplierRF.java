@@ -33,12 +33,13 @@ public class TileAutomatorPowerSupplierRF
   // - Accessors
   // --------------------------------------------------------------------------
 
+  @Override
   public boolean isPowered() {
 
     TileEntity tileEntity = this.world.getTileEntity(this.pos.up());
 
-    if (tileEntity instanceof ITileAutomatorPowerConsumer) {
-      return ((ITileAutomatorPowerConsumer) tileEntity).isPowered();
+    if (tileEntity instanceof ITileAutomatorBlock) {
+      return ((ITileAutomatorBlock) tileEntity).isPowered();
     }
 
     return false;
@@ -57,7 +58,7 @@ public class TileAutomatorPowerSupplierRF
 
     TileEntity tileEntity = this.world.getTileEntity(this.pos.up());
 
-    if (tileEntity instanceof ITileAutomatorPowerConsumer) {
+    if (tileEntity instanceof ITileAutomatorBlock) {
       this.energyCapabilityDelegate.setEnergyStorage(
           tileEntity.getCapability(CapabilityEnergy.ENERGY, EnumFacing.DOWN)
       );

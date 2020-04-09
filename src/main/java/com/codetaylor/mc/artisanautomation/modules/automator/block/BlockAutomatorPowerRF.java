@@ -1,8 +1,12 @@
 package com.codetaylor.mc.artisanautomation.modules.automator.block;
 
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.ITileAutomatorPowerConsumer;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.ITileAutomatorPowerSupplier;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.ITileAutomatorBlock;
 import com.codetaylor.mc.artisanautomation.modules.automator.tile.TileAutomatorPowerSupplierRF;
 import com.codetaylor.mc.artisanworktables.lib.BlockPartialBase;
 import com.codetaylor.mc.athenaeum.util.AABBHelper;
+import com.codetaylor.mc.athenaeum.util.FluidHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -11,15 +15,20 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nonnull;
@@ -59,6 +68,47 @@ public class BlockAutomatorPowerRF
         .withProperty(SOUTH, EnumType.NONE)
         .withProperty(EAST, EnumType.NONE)
         .withProperty(WEST, EnumType.NONE));
+  }
+
+  // --------------------------------------------------------------------------
+  // - Interaction
+  // --------------------------------------------------------------------------
+
+  @Override
+  public boolean onBlockActivated(
+      World worldIn,
+      BlockPos pos,
+      IBlockState state,
+      EntityPlayer playerIn,
+      EnumHand hand,
+      EnumFacing facing,
+      float hitX,
+      float hitY,
+      float hitZ
+  ) {
+
+    if (worldIn.isRemote) {
+      return true;
+    }
+
+    TileEntity tileEntity = worldIn.getTileEntity(pos.up());
+
+    if (tileEntity instanceof ITileAutomatorPowerConsumer
+        || tileEntity instanceof ITileAutomatorPowerSupplier) {
+
+      IFluidHandler fluidHandler = tileEntity.getCapability(
+          CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN);
+
+      if (fluidHandler != null) {
+        if (FluidHelper.drainWaterFromBottle(playerIn, fluidHandler)
+            || FluidHelper.drainWaterIntoBottle(playerIn, fluidHandler)
+            || FluidUtil.interactWithFluidHandler(playerIn, hand, fluidHandler)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 
   // --------------------------------------------------------------------------
@@ -113,8 +163,8 @@ public class BlockAutomatorPowerRF
       {
         TileEntity tileEntity = world.getTileEntity(pos);
 
-        if (tileEntity instanceof TileAutomatorPowerSupplierRF) {
-          boolean powered = ((TileAutomatorPowerSupplierRF) tileEntity).isPowered();
+        if (tileEntity instanceof ITileAutomatorBlock) {
+          boolean powered = ((ITileAutomatorBlock) tileEntity).isPowered();
           state = state.withProperty(POWERED, powered);
         }
       }
@@ -126,7 +176,8 @@ public class BlockAutomatorPowerRF
           continue;
         }
 
-        if (tileEntity.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite())) {
+        if (tileEntity.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite())
+            || tileEntity.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing.getOpposite())) {
           state = state.withProperty(PROPERTY_MAP.get(facing), EnumType.ITEM);
 
         } else if (tileEntity.hasCapability(CapabilityEnergy.ENERGY, facing.getOpposite())) {

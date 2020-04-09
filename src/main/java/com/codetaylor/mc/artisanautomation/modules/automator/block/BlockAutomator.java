@@ -5,7 +5,6 @@ import com.codetaylor.mc.artisanautomation.modules.automator.tile.TileAutomator;
 import com.codetaylor.mc.artisanworktables.ModArtisanWorktables;
 import com.codetaylor.mc.artisanworktables.lib.BlockPartialBase;
 import com.codetaylor.mc.athenaeum.util.AABBHelper;
-import com.codetaylor.mc.athenaeum.util.FluidHelper;
 import com.codetaylor.mc.athenaeum.util.StackHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -20,9 +19,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -77,18 +73,6 @@ public class BlockAutomator
     TileEntity tileEntity = worldIn.getTileEntity(pos);
 
     if (tileEntity instanceof TileAutomator) {
-
-      IFluidHandler fluidHandler = tileEntity.getCapability(
-          CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
-
-      if (fluidHandler != null) {
-        if (FluidHelper.drainWaterFromBottle(playerIn, fluidHandler)
-            || FluidHelper.drainWaterIntoBottle(playerIn, fluidHandler)
-            || FluidUtil.interactWithFluidHandler(playerIn, hand, fluidHandler)) {
-          return true;
-        }
-      }
-
       playerIn.openGui(ModArtisanWorktables.INSTANCE, 1, worldIn,
           pos.getX(), pos.getY(), pos.getZ()
       );
