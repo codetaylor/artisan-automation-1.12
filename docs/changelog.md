@@ -10,6 +10,9 @@
         * Energy Capacity Upgrade
         * Auto-Export Items Upgrade
         * Auto-Import Items Upgrade
+        * Auto-Import / Export Items Upgrade
+        * Auto-Import Fluids Upgrade
+        * Tool Repair Upgrade
 
 ---
 
