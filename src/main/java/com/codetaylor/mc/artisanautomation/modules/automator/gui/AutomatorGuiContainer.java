@@ -3,6 +3,7 @@ package com.codetaylor.mc.artisanautomation.modules.automator.gui;
 import com.codetaylor.mc.artisanautomation.modules.automator.ModuleAutomator;
 import com.codetaylor.mc.artisanautomation.modules.automator.TooltipUtil;
 import com.codetaylor.mc.artisanautomation.modules.automator.gui.element.*;
+import com.codetaylor.mc.artisanautomation.modules.automator.gui.slot.InventorySlot;
 import com.codetaylor.mc.artisanautomation.modules.automator.gui.slot.TableSlot;
 import com.codetaylor.mc.artisanautomation.modules.automator.tile.TileAutomator;
 import com.codetaylor.mc.athenaeum.gui.GuiContainerBase;
@@ -14,6 +15,7 @@ import com.codetaylor.mc.athenaeum.packer.PackAPI;
 import com.codetaylor.mc.athenaeum.packer.PackedData;
 import com.codetaylor.mc.athenaeum.util.TooltipHelper;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -387,14 +389,55 @@ public class AutomatorGuiContainer
   }
 
   @Override
+  protected void renderHoveredToolTip(int x, int y) {
+
+    if (this.mc.player.inventory.getItemStack().isEmpty()) {
+      Slot slotUnderMouse = this.getSlotUnderMouse();
+
+      if (slotUnderMouse instanceof InventorySlot
+          && !slotUnderMouse.getHasStack()) {
+        this.renderInventoryTooltip(x, y, ((InventorySlot) slotUnderMouse).getIndex());
+
+      } else if (slotUnderMouse != null
+          && slotUnderMouse.getHasStack()) {
+        this.renderToolTip(slotUnderMouse.getStack(), x, y);
+      }
+    }
+  }
+
+  @Override
   protected void renderToolTip(ItemStack stack, int x, int y) {
 
     Slot slotUnderMouse = this.getSlotUnderMouse();
 
-    if (stack.isEmpty() || !(slotUnderMouse instanceof TableSlot)) {
+    if (slotUnderMouse instanceof TableSlot) {
+      this.renderTableTooltip(stack, x, y);
+
+    } else {
       super.renderToolTip(stack, x, y);
-      return;
     }
+  }
+
+  private void renderInventoryTooltip(int x, int y, int index) {
+
+    ItemStack ghostStack = this.tile.getInventoryGhostItemStackHandler().getStackInSlot(index);
+
+    if (!ghostStack.isEmpty()
+        && this.tile.getInventoryItemStackHandler().getStackInSlot(index).isEmpty()) {
+      List<String> tooltip = new ArrayList<>();
+      tooltip.add(ghostStack.getRarity().rarityColor + ghostStack.getDisplayName());
+      tooltip.add(I18n.format(
+          "tooltip.artisanautomation.automator.clear.ghost.item",
+          TextFormatting.DARK_GRAY,
+          TextFormatting.DARK_GRAY
+      ));
+      FontRenderer font = ghostStack.getItem().getFontRenderer(ghostStack);
+      this.drawHoveringText(tooltip, x, y, (font == null ? this.fontRenderer : font));
+      net.minecraftforge.fml.client.config.GuiUtils.postItemToolTip();
+    }
+  }
+
+  private void renderTableTooltip(ItemStack stack, int x, int y) {
 
     List<String> tooltip = new ArrayList<>();
 

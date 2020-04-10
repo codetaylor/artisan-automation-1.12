@@ -121,7 +121,7 @@ public class AutomatorContainer
     for (int i = 0; i < 26; i++) {
       int x = i % 9;
       int y = i / 9;
-      this.containerSlotAdd(new PanelSlot(
+      this.containerSlotAdd(new InventorySlot(
           () -> this.state, EnumState.Inventory,
           this.tile.getInventoryItemStackHandler(), i, 8 + (x * 18), 38 + (y * 18)
       ));
