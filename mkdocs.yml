@@ -1,0 +1,19 @@
+site_name: Artisan Automation
+
+nav:
+  - Introduction: index.md
+  - Changelog: changelog.md
+  - Devices:
+      - Mechanical Artisan: mechanical-artisan.md
+      - Power Converter: power-converter.md
+      - Upgrades: upgrades.md
+  - Development:
+      - Contributor's License Agreement: cla.md
+
+theme: readthedocs
+
+extra_css: [custom.css]
+
+markdown_extensions:
+  - admonition
+  - codehilite
