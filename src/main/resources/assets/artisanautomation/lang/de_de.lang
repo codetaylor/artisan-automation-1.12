@@ -1,0 +1,48 @@
+# Mechanical Artisan
+tile.artisanautomation.automator.name=Mechanischer Handwerker
+tile.artisanautomation.automator_power_rf.name=Stromkonvertierer der Handwerker (RF)
+
+# Upgrade Items
+item.artisanautomation.upgrade.speed.name=Geschwindigkeitsverbesserung
+item.artisanautomation.upgrade.fluid.capacity.name=Flüssigkeitskapazitätsverbesserung
+item.artisanautomation.upgrade.energy.capacity.name=Energiekapazitätsverbesserung
+item.artisanautomation.upgrade.auto.export.items.name=Automatische Exportverbesserung
+item.artisanautomation.upgrade.auto.import.items.name=Automatische Importverbesserung
+item.artisanautomation.upgrade.auto.import.export.items.name=Automatische Import und Exportverbesserung
+item.artisanautomation.upgrade.auto.import.fluids.name=Automatische Importverbesserung für Flüssigkeiten
+item.artisanautomation.upgrade.tool.repair.name=Werkzeugreparaturverbesserung
+
+# Upgrade Item Tooltip
+tooltip.artisanautomation.automator.upgrade.speed=Geschwindigkeit: %d%%
+tooltip.artisanautomation.automator.upgrade.energy.usage=Energieverbrauch: %d%%
+tooltip.artisanautomation.automator.upgrade.fluid.capacity=Flüssigkeitskapazität: %d%%
+tooltip.artisanautomation.automator.upgrade.energy.capacity=Energiekapazität: %d%%
+tooltip.artisanautomation.automator.upgrade.auto.export.items=Auto-Export Items: %s
+tooltip.artisanautomation.automator.upgrade.auto.import.items=Auto-Import Items: %s
+tooltip.artisanautomation.automator.upgrade.auto.import.fluids=Auto-Import Flüssigkeiten: %s
+tooltip.artisanautomation.automator.upgrade.tool.repair.durability=Haltbarkeit repariert: %d%%
+
+# Tooltip
+tooltip.artisanautomation.automator.output.slot.mode=Modus: %s
+tooltip.artisanautomation.automator.output.slot.mode.keep=Behalten
+tooltip.artisanautomation.automator.output.slot.mode.keep.info=Output kann nicht Extern abgegeben werden
+tooltip.artisanautomation.automator.output.slot.mode.manual=Manual
+tooltip.artisanautomation.automator.output.slot.mode.manual.info=Output kann Extern abegegeben werden
+tooltip.artisanautomation.automator.output.slot.mode.inventory=Inventory
+tooltip.artisanautomation.automator.output.slot.mode.inventory.info=Output wird in das Inventar abgegeben
+tooltip.artisanautomation.automator.output.slot.mode.export=Export
+tooltip.artisanautomation.automator.output.slot.mode.export.info=Output wird in ein angrenzendes Inventar abgegeben
+tooltip.artisanautomation.automator.inventory.locked=Inventar gesperrt
+tooltip.artisanautomation.automator.inventory.locked.info=Leere Slots speichern Itemtypen
+tooltip.artisanautomation.automator.inventory.unlocked=Inventar entsperrt
+tooltip.artisanautomation.automator.inventory.unlocked.info=Leere Slots speichern keine Itemtypen
+tooltip.artisanautomation.automator.fluid.locked=Tank gesperrt
+tooltip.artisanautomation.automator.fluid.locked.info=Leerer Tank speichert Flüssigkeitentyp
+tooltip.artisanautomation.automator.fluid.unlocked=Tank entsperrt
+tooltip.artisanautomation.automator.fluid.unlocked.info=Leerer Tank speichert Flüssigkeitentyp nicht
+tooltip.artisanautomation.automator.fluid.mode=Modus: %s
+tooltip.artisanautomation.automator.fluid.mode.fill=Füllen
+tooltip.artisanautomation.automator.fluid.mode.fill.info=Tank kann befüllt werden
+tooltip.artisanautomation.automator.fluid.mode.drain=Ablassen
+tooltip.artisanautomation.automator.fluid.mode.drain.info=Tank kann entleert werden
+tooltip.artisanautomation.automator.clear.ghost.item=%sLeeren: %sSTRG + Linke Maustaste

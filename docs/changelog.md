@@ -13,6 +13,8 @@
         * Auto-Import / Export Items Upgrade
         * Auto-Import Fluids Upgrade
         * Tool Repair Upgrade
+    * Translations:
+        * de_de.lang (LeonOwO)
 
 ---
 
