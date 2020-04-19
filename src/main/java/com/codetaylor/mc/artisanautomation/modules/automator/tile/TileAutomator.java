@@ -1010,13 +1010,13 @@ public class TileAutomator
           continue;
         }
 
-        IFluidHandler fluidHandler = tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.HORIZONTALS[i].getOpposite());
+        IFluidHandler otherFluidHandler = tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.HORIZONTALS[i].getOpposite());
 
-        if (fluidHandler == null) {
+        if (otherFluidHandler == null) {
           continue;
         }
 
-        FluidStack drain = fluidHandler.drain(1000, false);
+        FluidStack drain = otherFluidHandler.drain(1000, false);
 
         if (drain == null || drain.amount == 0) {
           continue;
@@ -1028,7 +1028,7 @@ public class TileAutomator
           continue;
         }
 
-        fluidHandler.drain(fill, true);
+        otherFluidHandler.drain(fill, true);
         break verticalSearch;
       }
     }
@@ -1114,7 +1114,7 @@ public class TileAutomator
         continue;
       }
 
-      ItemStack stackInSlot = this.outputItemStackHandler[i].getStackInSlot(0);
+      ItemStack stackToExport = this.outputItemStackHandler[i].getStackInSlot(0);
 
       verticalSearch:
       for (int l = 1; l < this.getPos().getY(); l++) {
@@ -1132,16 +1132,16 @@ public class TileAutomator
             continue;
           }
 
-          IItemHandler itemHandler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.HORIZONTALS[j].getOpposite());
+          IItemHandler otherItemHandler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.HORIZONTALS[j].getOpposite());
 
-          if (itemHandler == null) {
+          if (otherItemHandler == null) {
             continue;
           }
 
-          for (int k = 0; k < itemHandler.getSlots(); k++) {
-            ItemStack itemStack = itemHandler.insertItem(k, stackInSlot, false);
+          for (int k = 0; k < otherItemHandler.getSlots(); k++) {
+            ItemStack itemStack = otherItemHandler.insertItem(k, stackToExport, false);
 
-            if (itemStack.getCount() != stackInSlot.getCount()) {
+            if (itemStack.getCount() != stackToExport.getCount()) {
               this.outputItemStackHandler[i].setStackInSlot(0, itemStack);
               break verticalSearch;
             }
