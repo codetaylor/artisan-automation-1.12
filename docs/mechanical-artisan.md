@@ -4,6 +4,9 @@
 
 The Mechanical Artisan block is the block that does all the work and opens the GUI when clicked. It can only be placed on top of a Power Converter block.
 
+!!! note
+    Energy, items, and fluids can only be inserted into the Mechanical Artisan through the Power Converter on which it stands. If more inputs or outputs are needed, the Power Converters may be stacked.
+
 ## System Panel
 
 ### Table Slot
