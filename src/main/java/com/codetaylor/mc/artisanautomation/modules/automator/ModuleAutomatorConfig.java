@@ -1,9 +1,8 @@
 package com.codetaylor.mc.artisanautomation.modules.automator;
 
-import com.codetaylor.mc.artisanworktables.modules.worktables.ModuleWorktables;
 import net.minecraftforge.common.config.Config;
 
-@Config(modid = ModuleWorktables.MOD_ID, name = ModuleWorktables.MOD_ID + "/module.Automator")
+@Config(modid = ModuleAutomator.MOD_ID, name = ModuleAutomator.MOD_ID + "/module.Automator")
 public class ModuleAutomatorConfig {
 
   @Config.Comment({
