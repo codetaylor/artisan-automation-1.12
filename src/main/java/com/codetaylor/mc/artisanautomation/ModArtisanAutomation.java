@@ -10,13 +10,15 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 @Mod(
     modid = ModArtisanAutomation.MOD_ID,
     version = ModArtisanAutomation.VERSION,
-    name = ModArtisanAutomation.NAME
+    name = ModArtisanAutomation.NAME,
+    dependencies = ModArtisanAutomation.DEPENDENCIES
 )
 public class ModArtisanAutomation {
 
   public static final String MOD_ID = Reference.MOD_ID;
   public static final String VERSION = Reference.VERSION;
   public static final String NAME = Reference.NAME;
+  public static final String DEPENDENCIES = Reference.DEPENDENCIES;
 
   private final ModuleManager moduleManager;
 
