@@ -1048,9 +1048,9 @@ public class TileAutomator
 
     this.autoImportItemsTickCount = 0;
 
-    IItemHandler inventoryHandler = this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
+    IItemHandler localItemHandler = this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
 
-    if (inventoryHandler == null) {
+    if (localItemHandler == null) {
       return;
     }
 
@@ -1070,33 +1070,35 @@ public class TileAutomator
           continue;
         }
 
-        IItemHandler itemHandler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.HORIZONTALS[i].getOpposite());
+        IItemHandler otherItemHandler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.HORIZONTALS[i].getOpposite());
 
-        if (itemHandler == null) {
+        if (otherItemHandler == null) {
           continue;
         }
 
-        for (int k = 0; k < itemHandler.getSlots(); k++) {
-          ItemStack stackInSlot = itemHandler.getStackInSlot(k);
+        for (int k = 0; k < otherItemHandler.getSlots(); k++) {
+          ItemStack otherStackInSlotCopy = otherItemHandler.extractItem(k, otherItemHandler.getStackInSlot(k).getCount(), true);
 
-          if (stackInSlot.isEmpty()) {
+          if (otherStackInSlotCopy.isEmpty()) {
             continue;
           }
 
-          ItemStack itemStack = inventoryHandler.insertItem(0, stackInSlot.copy(), false);
+          int otherStackCount = otherStackInSlotCopy.getCount();
 
-          for (int l = 1; l < inventoryHandler.getSlots(); l++) {
+          ItemStack itemStackToInsert = localItemHandler.insertItem(0, otherStackInSlotCopy, false);
 
-            if (!itemStack.isEmpty()) {
-              itemStack = inventoryHandler.insertItem(l, itemStack, false);
+          for (int l = 1; l < localItemHandler.getSlots(); l++) {
+
+            if (!itemStackToInsert.isEmpty()) {
+              itemStackToInsert = localItemHandler.insertItem(l, itemStackToInsert, false);
 
             } else {
               break;
             }
           }
 
-          if (stackInSlot.getCount() != itemStack.getCount()) {
-            itemHandler.extractItem(k, stackInSlot.getCount() - itemStack.getCount(), false);
+          if (otherStackCount != itemStackToInsert.getCount()) {
+            otherItemHandler.extractItem(k, otherStackCount - itemStackToInsert.getCount(), false);
             break verticalSearch;
           }
         }
