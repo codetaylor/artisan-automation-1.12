@@ -1,3 +1,10 @@
+**1.0.2**
+
+  * **Fixed:**
+    * Server crash [(#229)](https://github.com/codetaylor/artisan-worktables/issues/229)
+    
+---
+
 **1.0.1**
 
   * **Fixed:**
