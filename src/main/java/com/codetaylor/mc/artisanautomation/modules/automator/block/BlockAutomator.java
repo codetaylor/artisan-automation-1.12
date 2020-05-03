@@ -34,6 +34,8 @@ public class BlockAutomator
 
     super(Material.ROCK);
     this.setSoundType(SoundType.GLASS);
+    this.setResistance(10);
+    this.setHardness(1.5f);
     this.setHarvestLevel("pickaxe", 0);
   }
 

@@ -62,6 +62,9 @@ public class BlockAutomatorPowerRF
 
     super(Material.ROCK);
     this.setSoundType(SoundType.STONE);
+    this.setResistance(10);
+    this.setHardness(1.5f);
+    this.setHarvestLevel("pickaxe", 0);
     this.setDefaultState(this.blockState.getBaseState()
         .withProperty(POWERED, false)
         .withProperty(NORTH, EnumType.NONE)

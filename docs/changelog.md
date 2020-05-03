@@ -1,3 +1,10 @@
+**1.0.1**
+
+  * **Fixed:**
+    * Mechanical Artisan and Power Converter blocks break instantly with bare hand [(#228)](https://github.com/codetaylor/artisan-worktables/issues/228)
+    
+---
+
 # 1.0.0
 
   * **Added:**
