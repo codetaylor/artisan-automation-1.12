@@ -1,3 +1,10 @@
+**1.0.3**
+
+  * **Fixed:**
+    * HWYLA and Embers NPE [(#233)](https://github.com/codetaylor/artisan-worktables/issues/233)
+
+---
+
 **1.0.2**
 
   * **Fixed:**

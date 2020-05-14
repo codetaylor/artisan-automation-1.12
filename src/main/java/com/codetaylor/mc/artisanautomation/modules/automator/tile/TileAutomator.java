@@ -724,9 +724,10 @@ public class TileAutomator
   @Override
   public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
 
-    return (facing == EnumFacing.DOWN && capability == CapabilityEnergy.ENERGY)
+    return (facing == EnumFacing.DOWN)
+        && ((capability == CapabilityEnergy.ENERGY)
         || (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-        || (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
+        || (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY));
   }
 
   @Nullable
