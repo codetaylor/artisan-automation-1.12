@@ -1289,7 +1289,8 @@ public class TileAutomator
           if (!itemStack.isEmpty()) {
 
             for (int k = 0; k < this.inventoryItemStackHandler.getSlots(); k++) {
-              itemStack = this.inventoryItemStackHandler.insertItem(k, itemStack, false);
+              // use the capability here to leverage ghost item restriction
+              itemStack = this.itemCapabilityWrapper.insertItem(k, itemStack, false);
 
               if (itemStack.isEmpty()) {
                 break;
@@ -1303,7 +1304,8 @@ public class TileAutomator
           for (ItemStack itemStack : output) {
 
             for (int j = 0; j < this.inventoryItemStackHandler.getSlots(); j++) {
-              itemStack = this.inventoryItemStackHandler.insertItem(j, itemStack, false);
+              // use the capability here to leverage ghost item restriction
+              itemStack = this.itemCapabilityWrapper.insertItem(j, itemStack, false);
 
               if (itemStack.isEmpty()) {
                 break;
