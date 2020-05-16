@@ -1283,6 +1283,7 @@ public class TileAutomator
 
         int matrixSlotCount = automatorCraftingContext.getCraftingMatrixHandler().getSlots();
 
+        // Put any items remaining in the crafting grid back into the inventory, ie. empty bucket.
         for (int j = 0; j < matrixSlotCount; j++) {
           ItemStack itemStack = automatorCraftingContext.getCraftingMatrixHandler().getStackInSlot(j);
 
@@ -1426,6 +1427,9 @@ public class TileAutomator
     ItemStack remainingItems = toInsert.copy();
 
     for (int i = 0; i < handler.getSlots(); i++) {
+      // The simulate flag is set to false here because we're working on a
+      // duplicate handler. This is important to determine if the given
+      // handler can contain all of the items in question.
       remainingItems = handler.insertItem(i, remainingItems, false);
 
       if (remainingItems.isEmpty()) {
