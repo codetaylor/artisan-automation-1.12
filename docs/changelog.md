@@ -1,3 +1,10 @@
+**1.0.4**
+
+  * **Fixed:**
+    * Crafting output dupe [(#234)](https://github.com/codetaylor/artisan-worktables/issues/234)
+
+---
+
 **1.0.3**
 
   * **Fixed:**

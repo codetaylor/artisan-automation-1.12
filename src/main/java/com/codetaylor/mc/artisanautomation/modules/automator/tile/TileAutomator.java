@@ -1704,7 +1704,7 @@ public class TileAutomator
       super(toCopy.getSlots());
 
       for (int i = 0; i < toCopy.getSlots(); i++) {
-        this.setStackInSlot(i, toCopy.getStackInSlot(i));
+        this.setStackInSlot(i, toCopy.getStackInSlot(i).copy());
       }
     }
 
@@ -1784,7 +1784,7 @@ public class TileAutomator
       this.ghostItemStackHandler = toCopy.ghostItemStackHandler;
 
       for (int i = 0; i < toCopy.getSlots(); i++) {
-        this.setStackInSlot(i, toCopy.getStackInSlot(i));
+        this.setStackInSlot(i, toCopy.getStackInSlot(i).copy());
       }
     }
 
