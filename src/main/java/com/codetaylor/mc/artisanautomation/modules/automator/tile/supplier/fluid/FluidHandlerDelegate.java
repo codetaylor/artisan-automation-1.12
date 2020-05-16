@@ -1,4 +1,4 @@
-package com.codetaylor.mc.artisanautomation.modules.automator.tile;
+package com.codetaylor.mc.artisanautomation.modules.automator.tile.supplier.delegate;
 
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;

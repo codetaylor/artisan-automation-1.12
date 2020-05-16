@@ -1,9 +1,9 @@
 package com.codetaylor.mc.artisanautomation.modules.automator.block;
 
-import com.codetaylor.mc.artisanautomation.modules.automator.tile.ITileAutomatorPowerConsumer;
-import com.codetaylor.mc.artisanautomation.modules.automator.tile.ITileAutomatorPowerSupplier;
-import com.codetaylor.mc.artisanautomation.modules.automator.tile.ITileAutomatorBlock;
-import com.codetaylor.mc.artisanautomation.modules.automator.tile.TileAutomatorPowerSupplierRF;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.ITileAutomatorPowerConsumer;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.supplier.ITileAutomatorPowerSupplier;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.ITileAutomatorBlock;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.supplier.TileAutomatorPowerSupplierRF;
 import com.codetaylor.mc.artisanworktables.lib.BlockPartialBase;
 import com.codetaylor.mc.athenaeum.util.AABBHelper;
 import com.codetaylor.mc.athenaeum.util.FluidHelper;

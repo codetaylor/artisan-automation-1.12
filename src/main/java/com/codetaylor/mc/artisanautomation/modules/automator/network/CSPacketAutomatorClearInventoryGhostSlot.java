@@ -1,6 +1,6 @@
 package com.codetaylor.mc.artisanautomation.modules.automator.network;
 
-import com.codetaylor.mc.artisanautomation.modules.automator.tile.TileAutomator;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.TileAutomator;
 import com.codetaylor.mc.athenaeum.spi.packet.SPacketTileEntityBase;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.item.ItemStack;

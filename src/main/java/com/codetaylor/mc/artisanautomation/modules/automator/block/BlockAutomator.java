@@ -1,7 +1,7 @@
 package com.codetaylor.mc.artisanautomation.modules.automator.block;
 
-import com.codetaylor.mc.artisanautomation.modules.automator.tile.ITileAutomatorPowerSupplier;
-import com.codetaylor.mc.artisanautomation.modules.automator.tile.TileAutomator;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.supplier.ITileAutomatorPowerSupplier;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.TileAutomator;
 import com.codetaylor.mc.artisanworktables.ModArtisanWorktables;
 import com.codetaylor.mc.artisanworktables.lib.BlockPartialBase;
 import com.codetaylor.mc.athenaeum.util.AABBHelper;

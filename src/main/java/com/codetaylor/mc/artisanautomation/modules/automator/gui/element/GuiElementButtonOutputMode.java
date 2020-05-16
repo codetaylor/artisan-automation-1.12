@@ -3,7 +3,7 @@ package com.codetaylor.mc.artisanautomation.modules.automator.gui.element;
 import com.codetaylor.mc.artisanautomation.modules.automator.ModuleAutomator;
 import com.codetaylor.mc.artisanautomation.modules.automator.gui.AutomatorContainer;
 import com.codetaylor.mc.artisanautomation.modules.automator.network.CSPacketAutomatorOutputModeChange;
-import com.codetaylor.mc.artisanautomation.modules.automator.tile.TileAutomator;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.TileAutomator;
 import com.codetaylor.mc.athenaeum.gui.GuiContainerBase;
 import com.codetaylor.mc.athenaeum.gui.Texture;
 import com.codetaylor.mc.athenaeum.gui.element.IGuiElementTooltipExtendedProvider;

@@ -1,15 +1,16 @@
-package com.codetaylor.mc.artisanautomation.modules.automator.tile;
+package com.codetaylor.mc.artisanautomation.modules.automator.tile.supplier;
 
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.ITileAutomatorBlock;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.supplier.energy.EnergyCapabilityDelegate;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.supplier.fluid.FluidCapabilityDelegate;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.supplier.item.ItemCapabilityDelegate;
 import com.codetaylor.mc.athenaeum.spi.TileEntityBase;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -111,72 +112,4 @@ public class TileAutomatorPowerSupplierRF
     return null;
   }
 
-  public static class EnergyCapabilityDelegate
-      extends EnergyStorageAdapter {
-
-    private IEnergyStorage energyStorage;
-
-    public EnergyCapabilityDelegate setEnergyStorage(@Nullable IEnergyStorage energyStorage) {
-
-      this.energyStorage = energyStorage;
-      return this;
-    }
-
-    @Override
-    public int receiveEnergy(int maxReceive, boolean simulate) {
-
-      if (this.energyStorage == null) {
-        return 0;
-      }
-
-      return this.energyStorage.receiveEnergy(
-          maxReceive,
-          simulate
-      );
-    }
-
-    @Override
-    public int getEnergyStored() {
-
-      if (this.energyStorage == null) {
-        return 0;
-      }
-
-      return this.energyStorage.getEnergyStored();
-    }
-
-    @Override
-    public int getMaxEnergyStored() {
-
-      if (this.energyStorage == null) {
-        return 0;
-      }
-
-      return this.energyStorage.getMaxEnergyStored();
-    }
-
-    @Override
-    public boolean canReceive() {
-
-      return (this.energyStorage != null);
-    }
-  }
-
-  public static class ItemCapabilityDelegate
-      extends ItemHandlerDelegate {
-
-    public void setItemHandler(@Nullable IItemHandler iItemHandler) {
-
-      this.itemHandler = iItemHandler;
-    }
-  }
-
-  public static class FluidCapabilityDelegate
-      extends FluidHandlerDelegate {
-
-    public void setFluidHandler(@Nullable IFluidHandler iFluidHandler) {
-
-      this.fluidHandler = iFluidHandler;
-    }
-  }
 }

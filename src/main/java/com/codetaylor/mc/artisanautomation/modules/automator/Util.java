@@ -1,6 +1,7 @@
 package com.codetaylor.mc.artisanautomation.modules.automator;
 
-import com.codetaylor.mc.artisanautomation.modules.automator.tile.TileAutomator;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.item.data.InventoryItemStackHandler;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.fluid.data.FluidHandler;
 import com.codetaylor.mc.artisanworktables.api.internal.recipe.IArtisanIngredient;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
@@ -14,7 +15,7 @@ public final class Util {
 
   public static void consumeIngredientsFor(
       List<IArtisanIngredient> recipeIngredients,
-      TileAutomator.InventoryItemStackHandler inventoryItemStackHandler,
+      InventoryItemStackHandler inventoryItemStackHandler,
       @Nullable IItemHandler itemHandler
   ) {
 
@@ -48,7 +49,7 @@ public final class Util {
   public static boolean hasIngredientsFor(
       List<IArtisanIngredient> recipeIngredients,
       List<IArtisanIngredient> recipeSecondaryIngredients,
-      TileAutomator.InventoryItemStackHandler inventoryItemStackHandler
+      InventoryItemStackHandler inventoryItemStackHandler
   ) {
 
     int inventorySlotCount = inventoryItemStackHandler.getSlots();
@@ -97,7 +98,7 @@ public final class Util {
     return true;
   }
 
-  public static boolean consumeFluidsFor(FluidStack requiredFluid, TileAutomator.FluidHandler[] fluidHandler) {
+  public static boolean consumeFluidsFor(FluidStack requiredFluid, FluidHandler[] fluidHandler) {
 
     if (requiredFluid == null
         || requiredFluid.amount == 0) {
@@ -106,7 +107,7 @@ public final class Util {
 
     int requiredFluidAmount = requiredFluid.amount;
 
-    for (TileAutomator.FluidHandler handler : fluidHandler) {
+    for (FluidHandler handler : fluidHandler) {
       FluidStack availableFluid = handler.getFluid();
 
       if (availableFluid == null) {
@@ -133,11 +134,11 @@ public final class Util {
     return false;
   }
 
-  public static boolean hasFluidsFor(FluidStack requiredFluid, TileAutomator.FluidHandler[] fluidHandler) {
+  public static boolean hasFluidsFor(FluidStack requiredFluid, FluidHandler[] fluidHandler) {
 
     int requiredFluidAmount = requiredFluid.amount;
 
-    for (TileAutomator.FluidHandler handler : fluidHandler) {
+    for (FluidHandler handler : fluidHandler) {
       FluidStack availableFluid = handler.getFluid();
 
       if (availableFluid == null) {

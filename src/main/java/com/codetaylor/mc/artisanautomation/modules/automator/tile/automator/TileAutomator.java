@@ -1,4 +1,4 @@
-package com.codetaylor.mc.artisanautomation.modules.automator.tile;
+package com.codetaylor.mc.artisanautomation.modules.automator.tile.automator;
 
 import com.codetaylor.mc.artisanautomation.modules.automator.ModuleAutomator;
 import com.codetaylor.mc.artisanautomation.modules.automator.ModuleAutomatorConfig;
@@ -7,6 +7,12 @@ import com.codetaylor.mc.artisanautomation.modules.automator.gui.AutomatorContai
 import com.codetaylor.mc.artisanautomation.modules.automator.gui.AutomatorGuiContainer;
 import com.codetaylor.mc.artisanautomation.modules.automator.item.ItemUpgrade;
 import com.codetaylor.mc.artisanautomation.modules.automator.reference.UpgradeTags;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.energy.data.EnergyTank;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.fluid.FluidCapabilityWrapper;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.fluid.data.FluidHandler;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.item.GhostItemInsertValidationItemHandlerWrapper;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.item.ItemCapabilityWrapper;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.item.data.*;
 import com.codetaylor.mc.artisanworktables.api.ArtisanAPI;
 import com.codetaylor.mc.artisanworktables.api.ArtisanConfig;
 import com.codetaylor.mc.artisanworktables.api.ArtisanToolHandlers;
@@ -17,31 +23,21 @@ import com.codetaylor.mc.artisanworktables.api.internal.reference.EnumTier;
 import com.codetaylor.mc.artisanworktables.api.internal.reference.EnumType;
 import com.codetaylor.mc.artisanworktables.api.recipe.IArtisanRecipe;
 import com.codetaylor.mc.artisanworktables.api.recipe.IToolHandler;
-import com.codetaylor.mc.artisanworktables.lib.IBooleanSupplier;
 import com.codetaylor.mc.artisanworktables.lib.TileNetBase;
-import com.codetaylor.mc.artisanworktables.modules.toolbox.ModuleToolbox;
-import com.codetaylor.mc.artisanworktables.modules.toolbox.ModuleToolboxConfig;
 import com.codetaylor.mc.artisanworktables.modules.worktables.block.BlockBase;
 import com.codetaylor.mc.artisanworktables.modules.worktables.block.BlockWorkshop;
 import com.codetaylor.mc.artisanworktables.modules.worktables.block.BlockWorkstation;
 import com.codetaylor.mc.artisanworktables.modules.worktables.block.BlockWorktable;
 import com.codetaylor.mc.artisanworktables.modules.worktables.item.ItemDesignPattern;
 import com.codetaylor.mc.artisanworktables.modules.worktables.tile.spi.CraftingMatrixStackHandler;
-import com.codetaylor.mc.athenaeum.inventory.ObservableEnergyStorage;
-import com.codetaylor.mc.athenaeum.inventory.ObservableFluidTank;
-import com.codetaylor.mc.athenaeum.inventory.ObservableStackHandler;
 import com.codetaylor.mc.athenaeum.network.tile.data.*;
 import com.codetaylor.mc.athenaeum.network.tile.spi.ITileData;
-import com.codetaylor.mc.athenaeum.network.tile.spi.ITileDataEnergyStorage;
-import com.codetaylor.mc.athenaeum.network.tile.spi.ITileDataFluidTank;
-import com.codetaylor.mc.athenaeum.network.tile.spi.ITileDataItemStackHandler;
 import com.codetaylor.mc.athenaeum.tile.IContainerProvider;
 import com.codetaylor.mc.athenaeum.util.BlockHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -57,12 +53,10 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -74,8 +68,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.BooleanSupplier;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 public class TileAutomator
@@ -190,7 +182,6 @@ public class TileAutomator
 
   private final ItemCapabilityWrapper itemCapabilityWrapper;
   private final FluidCapabilityWrapper fluidCapabilityWrapper;
-  private ICraftingMatrixStackHandler craftingMatrixStackHandler;
   private final Stats stats;
   private static final int AUTO_IMPORT_ITEMS_TICK_INTERVAL = 20;
   private int autoImportItemsTickCount;
@@ -1259,14 +1250,14 @@ public class TileAutomator
       int tableWidth = (tableTier == EnumTier.WORKSHOP) ? 5 : 3;
       int tableHeight = (tableTier == EnumTier.WORKSHOP) ? 5 : 3;
 
-      this.craftingMatrixStackHandler = new CraftingMatrixStackHandler(tableWidth, tableHeight);
+      ICraftingMatrixStackHandler craftingMatrixStackHandler = new CraftingMatrixStackHandler(tableWidth, tableHeight);
 
-      Util.consumeIngredientsFor(recipe.getIngredientList(), this.inventoryItemStackHandler, this.craftingMatrixStackHandler);
+      Util.consumeIngredientsFor(recipe.getIngredientList(), this.inventoryItemStackHandler, craftingMatrixStackHandler);
       Util.consumeIngredientsFor(recipe.getSecondaryIngredients(), this.inventoryItemStackHandler, null);
 
       AutomatorCraftingContext automatorCraftingContext = new AutomatorCraftingContext(
           this.world,
-          this.craftingMatrixStackHandler,
+          craftingMatrixStackHandler,
           this.toolStackHandler,
           this.inventoryItemStackHandler,
           this.fluidCapabilityWrapper,
@@ -1376,7 +1367,7 @@ public class TileAutomator
       if (outputMode == EnumOutputMode.Inventory) {
         // This needs to be wrapped in a ghost item check
         InventoryItemStackHandler handlerCopy = new InventoryItemStackHandler(this.getInventoryItemStackHandler());
-        handler = new GhostItemValidationItemHandlerWrapper(handlerCopy, this.inventoryGhostItemStackHandler, this.inventoryLocked::get);
+        handler = new GhostItemInsertValidationItemHandlerWrapper(handlerCopy, this.inventoryGhostItemStackHandler, this.inventoryLocked::get);
 
       } else {
         handler = new OutputItemStackHandler(this.getOutputItemStackHandler(recipeSlotIndex));
@@ -1579,703 +1570,6 @@ public class TileAutomator
   public boolean isPowered() {
 
     return (this.energyStorage.getEnergyStored() > 0);
-  }
-
-  // ---------------------------------------------------------------------------
-  // - Energy Tank
-  // ---------------------------------------------------------------------------
-
-  public static class EnergyTank
-      extends ObservableEnergyStorage
-      implements ITileDataEnergyStorage {
-
-    /* package */ EnergyTank(int capacity, int maxReceive, int maxExtract) {
-
-      super(capacity, maxReceive, maxExtract);
-    }
-
-    public void setCapacity(int capacity) {
-
-      this.capacity = capacity;
-
-      if (this.energy > capacity) {
-        this.extractEnergy(this.energy - capacity, false);
-      }
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // - Table Stack Handler
-  // ---------------------------------------------------------------------------
-
-  public static class TableItemStackHandler
-      extends ObservableStackHandler
-      implements ITileDataItemStackHandler {
-
-    /* package */ TableItemStackHandler() {
-
-      super(1);
-    }
-
-    @Override
-    public int getSlotLimit(int slot) {
-
-      return 1;
-    }
-
-    @Override
-    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-
-      if (!(stack.getItem() instanceof ItemBlock)) {
-        return false;
-      }
-
-      Block block = ((ItemBlock) stack.getItem()).getBlock();
-      return (block instanceof BlockBase);
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // - Upgrade Stack Handler
-  // ---------------------------------------------------------------------------
-
-  public static class UpgradeItemStackHandler
-      extends ObservableStackHandler
-      implements ITileDataItemStackHandler {
-
-    /* package */ UpgradeItemStackHandler() {
-
-      super(5);
-    }
-
-    @Override
-    public int getSlotLimit(int slot) {
-
-      return 1;
-    }
-
-    @Override
-    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-
-      return ItemUpgrade.isUpgrade(stack);
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // - Pattern Stack Handler
-  // ---------------------------------------------------------------------------
-
-  public static class PatternItemStackHandler
-      extends ObservableStackHandler
-      implements ITileDataItemStackHandler {
-
-    /* package */ PatternItemStackHandler() {
-
-      super(9);
-    }
-
-    @Override
-    public int getSlotLimit(int slot) {
-
-      return 1;
-    }
-
-    @Override
-    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-
-      Item item = stack.getItem();
-
-      return (item instanceof ItemDesignPattern)
-          && (((ItemDesignPattern) item).hasRecipe(stack));
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // - Output Stack Handler
-  // ---------------------------------------------------------------------------
-
-  public static class OutputItemStackHandler
-      extends ObservableStackHandler
-      implements ITileDataItemStackHandler {
-
-    /* package */ OutputItemStackHandler() {
-
-      super(9);
-    }
-
-    /* package */ OutputItemStackHandler(OutputItemStackHandler toCopy) {
-
-      super(toCopy.getSlots());
-
-      for (int i = 0; i < toCopy.getSlots(); i++) {
-        this.setStackInSlot(i, toCopy.getStackInSlot(i).copy());
-      }
-    }
-
-    /**
-     * Attempt to insert the given item stack into all slots in this handler
-     * starting with slot 0.
-     *
-     * @param itemStack the stack to insert
-     * @param simulate  simulate
-     * @return the items that couldn't be inserted
-     */
-    private ItemStack insert(ItemStack itemStack, boolean simulate) {
-
-      for (int i = 0; i < this.getSlots(); i++) {
-        itemStack = this.insertItem(i, itemStack, simulate);
-
-        if (itemStack.isEmpty()) {
-          break;
-        }
-      }
-
-      return itemStack;
-    }
-
-    /**
-     * Loop through the handler's slots starting with the second slot. If
-     * the slot isn't empty, remove the slot's stack and try to place the
-     * removed stack into all slots up to and including the current slot
-     * that was just emptied.
-     */
-    private void settleStacks() {
-
-      for (int j = 1; j < this.getSlots(); j++) {
-        ItemStack stackInSlot = this.getStackInSlot(j);
-
-        if (!stackInSlot.isEmpty()) {
-          int count = stackInSlot.getCount();
-          stackInSlot = this.extractItem(j, count, false);
-
-          for (int k = 0; k <= j; k++) {
-            stackInSlot = this.insertItem(k, stackInSlot, false);
-
-            if (stackInSlot.isEmpty()) {
-              break;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // - Inventory Stack Handler
-  // ---------------------------------------------------------------------------
-
-  public static class InventoryItemStackHandler
-      extends ObservableStackHandler
-      implements ITileDataItemStackHandler {
-
-    private final IBooleanSupplier isLocked;
-    private final InventoryGhostItemStackHandler ghostItemStackHandler;
-
-    /* package */ InventoryItemStackHandler(
-        IBooleanSupplier isLocked,
-        InventoryGhostItemStackHandler ghostItemStackHandler
-    ) {
-
-      super(26);
-      this.isLocked = isLocked;
-      this.ghostItemStackHandler = ghostItemStackHandler;
-    }
-
-    /* package */ InventoryItemStackHandler(InventoryItemStackHandler toCopy) {
-
-      super(toCopy.getSlots());
-      this.isLocked = toCopy.isLocked;
-      this.ghostItemStackHandler = toCopy.ghostItemStackHandler;
-
-      for (int i = 0; i < toCopy.getSlots(); i++) {
-        this.setStackInSlot(i, toCopy.getStackInSlot(i).copy());
-      }
-    }
-
-    @Override
-    protected void onContentsChanged(int slot) {
-
-      if (this.isLocked.get()) {
-        ItemStack stackInSlot = this.getStackInSlot(slot);
-
-        if (!stackInSlot.isEmpty()) {
-          ItemStack copy = stackInSlot.copy();
-          copy.setCount(1);
-          this.ghostItemStackHandler.setStackInSlot(slot, copy);
-        }
-      }
-      super.onContentsChanged(slot);
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // - Inventory Ghost Stack Handler
-  // ---------------------------------------------------------------------------
-
-  public static class InventoryGhostItemStackHandler
-      extends ObservableStackHandler
-      implements ITileDataItemStackHandler {
-
-    /* package */ InventoryGhostItemStackHandler() {
-
-      super(26);
-    }
-
-    @Override
-    public int getSlotLimit(int slot) {
-
-      return 1;
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // - Item Capability Wrapper
-  // ---------------------------------------------------------------------------
-
-  public static class ItemCapabilityWrapper
-      extends GhostItemValidationItemHandlerWrapper {
-
-    private final OutputItemStackHandler[] outputItemStackHandlers;
-    private final List<TileDataEnum<EnumOutputMode>> outputModes;
-
-    /* package */ ItemCapabilityWrapper(
-        InventoryItemStackHandler inventoryItemStackHandler,
-        InventoryGhostItemStackHandler inventoryGhostItemStackHandler,
-        OutputItemStackHandler[] outputItemStackHandlers,
-        List<TileDataEnum<EnumOutputMode>> outputModes,
-        BooleanSupplier inventoryLocked
-    ) {
-
-      super(inventoryItemStackHandler, inventoryGhostItemStackHandler, inventoryLocked);
-      this.outputItemStackHandlers = outputItemStackHandlers;
-      this.outputModes = outputModes;
-    }
-
-    @Override
-    public int getSlots() {
-
-      return super.getSlots() + this.outputItemStackHandlers.length;
-    }
-
-    @Nonnull
-    @Override
-    public ItemStack getStackInSlot(int slot) {
-
-      if (slot < super.getSlots()) {
-        return super.getStackInSlot(slot);
-      }
-
-      return this.outputItemStackHandlers[slot - super.getSlots()].getStackInSlot(0);
-    }
-
-    @Nonnull
-    @Override
-    public ItemStack extractItem(int slot, int amount, boolean simulate) {
-
-      if (slot < super.getSlots()) {
-        return ItemStack.EMPTY;
-      }
-
-      int actualSlot = slot - super.getSlots();
-
-      if (this.outputModes.get(actualSlot).get() != EnumOutputMode.Manual) {
-        return ItemStack.EMPTY;
-      }
-
-      return this.outputItemStackHandlers[actualSlot].extractItem(0, amount, simulate);
-    }
-
-    @Override
-    public int getSlotLimit(int slot) {
-
-      if (slot < super.getSlots()) {
-        return super.getSlotLimit(slot);
-      }
-
-      return this.outputItemStackHandlers[slot - super.getSlots()].getSlotLimit(0);
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // - Fluid Tank
-  // ---------------------------------------------------------------------------
-
-  public static class FluidHandler
-      extends ObservableFluidTank
-      implements ITileDataFluidTank {
-
-    private FluidStack memoryStack;
-
-    private final IBooleanSupplier locked;
-    private final Supplier<EnumFluidMode> mode;
-
-    /* package */ FluidHandler(
-        int capacity,
-        IBooleanSupplier locked,
-        Supplier<EnumFluidMode> mode
-    ) {
-
-      super(capacity);
-      this.locked = locked;
-      this.mode = mode;
-    }
-
-    public FluidStack getMemoryStack() {
-
-      return this.memoryStack;
-    }
-
-    public boolean isLocked() {
-
-      return this.locked.get();
-    }
-
-    private boolean updateMemory() {
-
-      if (this.locked.get()) {
-        // update the handler's memory
-        FluidStack fluid = this.getFluid();
-
-        if (fluid != null) {
-          this.memoryStack = fluid.copy();
-          return true;
-        }
-      }
-
-      // clear the handler's memory
-      return this.clearMemory();
-    }
-
-    private boolean clearMemory() {
-
-      if (this.memoryStack != null) {
-        this.memoryStack = null;
-        return true;
-      }
-
-      return false;
-    }
-
-    public boolean clearAll() {
-
-      FluidStack drained = super.drainInternal(this.getFluidAmount(), true);
-      boolean memoryCleared = this.clearMemory();
-      return (drained != null && drained.amount > 0) || memoryCleared;
-    }
-
-    @Override
-    public FluidTank readFromNBT(NBTTagCompound nbt) {
-
-      super.readFromNBT(nbt);
-
-      if (nbt.hasKey("memoryStack")) {
-        NBTTagCompound memoryStackTag = nbt.getCompoundTag("memoryStack");
-        this.memoryStack = FluidStack.loadFluidStackFromNBT(memoryStackTag);
-
-      } else {
-        this.memoryStack = null;
-      }
-      return this;
-    }
-
-    @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-
-      super.writeToNBT(nbt);
-
-      if (this.memoryStack != null) {
-        nbt.setTag("memoryStack", this.memoryStack.writeToNBT(new NBTTagCompound()));
-      }
-      return nbt;
-    }
-
-    @Override
-    public int fillInternal(FluidStack resource, boolean doFill) {
-
-      /*
-      Do nothing if the tank's mode is not set to fill.
-      If the tank is locked and the input fluid does not match the remembered
-      fluid, do nothing.
-      If the tank is unlocked and it was actually filled, set the remembered
-      fluid to the input fluid.
-       */
-
-      if (this.mode.get() != EnumFluidMode.Fill) {
-        return 0;
-      }
-
-      if (this.locked.get()
-          && !resource.isFluidEqual(this.memoryStack)) {
-        return 0;
-      }
-
-      int filled = super.fillInternal(resource, doFill);
-
-      if (doFill
-          && !this.locked.get()
-          && filled > 0) {
-        this.memoryStack = resource.copy();
-      }
-
-      return filled;
-    }
-
-    @Nullable
-    @Override
-    public FluidStack drainInternal(int maxDrain, boolean doDrain) {
-
-      /*
-      Do nothing if the tank's mode is not set to drain.
-      If the tank is unlocked and it was actually emptied by this drain,
-      clear the remembered fluid.
-       */
-
-      if (this.mode.get() != EnumFluidMode.Drain) {
-        return null;
-      }
-
-      FluidStack fluidStack = super.drainInternal(maxDrain, doDrain);
-
-      if (doDrain
-          && !this.locked.get()
-          && fluidStack != null
-          && fluidStack.amount > 0
-          && this.getFluidAmount() == 0) {
-        this.memoryStack = null;
-      }
-
-      return fluidStack;
-    }
-
-    @Override
-    public void setCapacity(int capacity) {
-
-      this.capacity = capacity;
-
-      if (this.fluid != null
-          && this.fluid.amount > capacity) {
-        this.forceDrain(this.fluid.amount - capacity);
-      }
-    }
-
-    public FluidStack forceDrain(int maxDrain) {
-
-      FluidStack fluidStack = super.drainInternal(maxDrain, true);
-
-      if (!this.locked.get()
-          && fluidStack != null
-          && fluidStack.amount > 0
-          && this.getFluidAmount() == 0) {
-        this.memoryStack = null;
-      }
-
-      return fluidStack;
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // - Bucket Stack Handler
-  // ---------------------------------------------------------------------------
-
-  public static class BucketItemStackHandler
-      extends ObservableStackHandler
-      implements ITileDataItemStackHandler {
-
-    /* package */ BucketItemStackHandler() {
-
-      super(3);
-    }
-
-    @Override
-    public int getSlotLimit(int slot) {
-
-      return 1;
-    }
-
-    @Override
-    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-
-      return stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // - Fluid Capability Wrapper
-  // ---------------------------------------------------------------------------
-
-  public static class FluidCapabilityWrapper
-      implements IFluidHandler {
-
-    private final FluidHandler[] fluidHandler;
-
-    private IFluidTankProperties[] tankProperties;
-
-    public FluidCapabilityWrapper(
-        FluidHandler[] fluidHandler
-    ) {
-
-      this.fluidHandler = fluidHandler;
-    }
-
-    @Override
-    public IFluidTankProperties[] getTankProperties() {
-
-      if (this.tankProperties == null) {
-        List<IFluidTankProperties> list = new ArrayList<>();
-
-        for (FluidHandler handler : this.fluidHandler) {
-          list.addAll(Arrays.asList(handler.getTankProperties()));
-        }
-        this.tankProperties = list.toArray(new IFluidTankProperties[0]);
-      }
-
-      return this.tankProperties;
-    }
-
-    @Override
-    public int fill(FluidStack resource, boolean doFill) {
-
-      FluidStack copy = resource.copy();
-      int total = copy.amount;
-
-      for (int i = 0; i < this.fluidHandler.length; i++) {
-        int filled = this.fluidHandler[i].fill(copy, doFill);
-        copy.amount -= filled;
-
-        if (copy.amount <= 0) {
-          return total;
-        }
-      }
-
-      return total - copy.amount;
-    }
-
-    @Nullable
-    @Override
-    public FluidStack drain(FluidStack resource, boolean doDrain) {
-
-      FluidStack toDrain = resource.copy();
-      int totalAmountDrained = 0;
-
-      for (int i = 0; i < this.fluidHandler.length; i++) {
-        FluidStack drained = this.fluidHandler[i].drain(toDrain, doDrain);
-        totalAmountDrained += (drained != null) ? drained.amount : 0;
-        toDrain.amount -= (drained != null) ? drained.amount : 0;
-
-        if (toDrain.amount <= 0) {
-          break;
-        }
-      }
-
-      return new FluidStack(resource, totalAmountDrained);
-    }
-
-    @Nullable
-    @Override
-    public FluidStack drain(int maxDrain, boolean doDrain) {
-
-      if (maxDrain <= 0) {
-        return null;
-      }
-
-      FluidStack result = null;
-      int remainingDrain = maxDrain;
-
-      for (int i = 0; i < this.fluidHandler.length; i++) {
-        FluidStack drained = this.fluidHandler[i].drain(remainingDrain, false);
-
-        if (drained == null) {
-          continue;
-        }
-
-        remainingDrain -= drained.amount;
-
-        if (result == null) {
-          result = this.fluidHandler[i].drain(drained.amount, doDrain);
-
-        } else {
-
-          if (result.isFluidEqual(drained)) {
-            this.fluidHandler[i].drain(drained.amount, doDrain);
-            result.amount += drained.amount;
-          }
-        }
-
-        if (remainingDrain <= 0) {
-          break;
-        }
-      }
-
-      return result;
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // - Tool Stack Handler
-  // ---------------------------------------------------------------------------
-
-  public static class ToolStackHandler
-      extends ObservableStackHandler
-      implements ITileDataItemStackHandler {
-
-    public ToolStackHandler() {
-
-      super(12);
-    }
-
-    @Override
-    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-
-      return ArtisanAPI.containsRecipeWithTool(stack);
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // - Tool Upgrade Stack Handler
-  // ---------------------------------------------------------------------------
-
-  public static class ToolUpgradeStackHandler
-      extends ObservableStackHandler
-      implements ITileDataItemStackHandler {
-
-    public ToolUpgradeStackHandler() {
-
-      super(6);
-    }
-
-    @Override
-    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-
-      return ItemUpgrade.isToolUpgrade(stack);
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // - Toolbox Stack Handler
-  // ---------------------------------------------------------------------------
-
-  public static class ToolboxStackHandler
-      extends ObservableStackHandler
-      implements ITileDataItemStackHandler {
-
-    public ToolboxStackHandler() {
-
-      super(1);
-    }
-
-    @Override
-    public int getSlotLimit(int slot) {
-
-      return 1;
-    }
-
-    @Override
-    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-
-      return ModuleToolboxConfig.ENABLE_MODULE
-          && ModuleToolboxConfig.MECHANICAL_TOOLBOX.ENABLED
-          && stack.getItem() == Item.getItemFromBlock(ModuleToolbox.Blocks.MECHANICAL_TOOLBOX);
-    }
   }
 
 }

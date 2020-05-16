@@ -1,6 +1,8 @@
 package com.codetaylor.mc.artisanautomation.modules.automator.network;
 
-import com.codetaylor.mc.artisanautomation.modules.automator.tile.TileAutomator;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.item.data.InventoryItemStackHandler;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.item.data.InventoryGhostItemStackHandler;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.TileAutomator;
 import com.codetaylor.mc.athenaeum.spi.packet.SPacketTileEntityBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -33,11 +35,11 @@ public class CSPacketAutomatorInventoryLockModeChange
       tileAutomator.setInventoryLocked(!tileAutomator.isInventoryLocked());
       System.out.println("Inventory locked: " + tileAutomator.isInventoryLocked());
 
-      TileAutomator.InventoryGhostItemStackHandler ghostHandler;
+      InventoryGhostItemStackHandler ghostHandler;
       ghostHandler = tileAutomator.getInventoryGhostItemStackHandler();
 
       if (tileAutomator.isInventoryLocked()) {
-        TileAutomator.InventoryItemStackHandler handler;
+        InventoryItemStackHandler handler;
         handler = tileAutomator.getInventoryItemStackHandler();
 
         for (int i = 0; i < handler.getSlots(); i++) {

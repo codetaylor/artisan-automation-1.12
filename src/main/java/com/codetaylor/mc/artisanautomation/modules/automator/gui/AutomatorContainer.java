@@ -1,7 +1,7 @@
 package com.codetaylor.mc.artisanautomation.modules.automator.gui;
 
 import com.codetaylor.mc.artisanautomation.modules.automator.gui.slot.*;
-import com.codetaylor.mc.artisanautomation.modules.automator.tile.TileAutomator;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.TileAutomator;
 import com.codetaylor.mc.athenaeum.gui.ContainerBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

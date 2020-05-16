@@ -4,7 +4,7 @@ import com.codetaylor.mc.artisanautomation.modules.automator.ModuleAutomator;
 import com.codetaylor.mc.artisanautomation.modules.automator.gui.AutomatorContainer;
 import com.codetaylor.mc.artisanautomation.modules.automator.gui.AutomatorGuiContainer;
 import com.codetaylor.mc.artisanautomation.modules.automator.network.CSPacketAutomatorFluidDestroy;
-import com.codetaylor.mc.artisanautomation.modules.automator.tile.TileAutomator;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.fluid.data.FluidHandler;
 import com.codetaylor.mc.athenaeum.gui.element.GuiElementFluidTankHorizontal;
 import com.codetaylor.mc.athenaeum.gui.element.IGuiElementClickable;
 import com.codetaylor.mc.athenaeum.gui.element.IGuiElementTooltipExtendedProvider;
@@ -29,13 +29,13 @@ public class GuiElementFluidTank
   private final BlockPos tilePos;
   private final int fluidIndex;
   private final AutomatorGuiContainer guiContainer;
-  private final TileAutomator.FluidHandler fluidHandler;
+  private final FluidHandler fluidHandler;
 
   public GuiElementFluidTank(
       BlockPos tilePos,
       int fluidIndex,
       AutomatorGuiContainer guiBase,
-      TileAutomator.FluidHandler fluidHandler,
+      FluidHandler fluidHandler,
       int elementX, int elementY,
       int elementWidth, int elementHeight
   ) {

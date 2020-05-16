@@ -7,8 +7,8 @@ import com.codetaylor.mc.artisanautomation.modules.automator.client.TESRAutomato
 import com.codetaylor.mc.artisanautomation.modules.automator.event.TooltipEventHandler;
 import com.codetaylor.mc.artisanautomation.modules.automator.item.ItemUpgrade;
 import com.codetaylor.mc.artisanautomation.modules.automator.network.*;
-import com.codetaylor.mc.artisanautomation.modules.automator.tile.TileAutomator;
-import com.codetaylor.mc.artisanautomation.modules.automator.tile.TileAutomatorPowerSupplierRF;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.TileAutomator;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.supplier.TileAutomatorPowerSupplierRF;
 import com.codetaylor.mc.artisanworktables.ModArtisanWorktables;
 import com.codetaylor.mc.athenaeum.module.ModuleBase;
 import com.codetaylor.mc.athenaeum.network.IPacketRegistry;

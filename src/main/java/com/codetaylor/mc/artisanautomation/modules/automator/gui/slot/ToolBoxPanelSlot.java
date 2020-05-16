@@ -1,7 +1,7 @@
 package com.codetaylor.mc.artisanautomation.modules.automator.gui.slot;
 
 import com.codetaylor.mc.artisanautomation.modules.automator.gui.AutomatorContainer;
-import com.codetaylor.mc.artisanautomation.modules.automator.tile.TileAutomator;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.item.data.ToolUpgradeStackHandler;
 import com.codetaylor.mc.athenaeum.util.StackHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 public class ToolBoxPanelSlot
     extends PanelSlot {
 
-  private final TileAutomator.ToolUpgradeStackHandler toolUpgradeStackHandler;
+  private final ToolUpgradeStackHandler toolUpgradeStackHandler;
   private final BlockPos pos;
   private final EntityPlayer player;
 
@@ -21,7 +21,7 @@ public class ToolBoxPanelSlot
       Supplier<AutomatorContainer.EnumState> currentState,
       AutomatorContainer.EnumState state,
       IItemHandler itemHandler,
-      TileAutomator.ToolUpgradeStackHandler toolUpgradeStackHandler,
+      ToolUpgradeStackHandler toolUpgradeStackHandler,
       BlockPos pos,
       EntityPlayer player,
       int index,
