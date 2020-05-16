@@ -34,6 +34,7 @@ import com.codetaylor.mc.athenaeum.network.tile.data.*;
 import com.codetaylor.mc.athenaeum.network.tile.spi.ITileData;
 import com.codetaylor.mc.athenaeum.tile.IContainerProvider;
 import com.codetaylor.mc.athenaeum.util.BlockHelper;
+import com.codetaylor.mc.athenaeum.util.StackHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -1143,6 +1144,9 @@ public class TileAutomator
     }
   }
 
+  /**
+   * Called server-side to complete one crafting process.
+   */
   private void doCrafting() {
 
     // get recipe
@@ -1286,6 +1290,12 @@ public class TileAutomator
               if (itemStack.isEmpty()) {
                 break;
               }
+            }
+
+            // If the stack isn't empty here, there wasn't room for it and it
+            // needs to be put in the world.
+            if (!itemStack.isEmpty()) {
+              StackHelper.spawnStackOnTop(this.world, itemStack, this.pos);
             }
           }
         }
