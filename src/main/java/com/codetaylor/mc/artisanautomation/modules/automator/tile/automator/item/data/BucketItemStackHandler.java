@@ -1,4 +1,4 @@
-package com.codetaylor.mc.artisanautomation.modules.automator.tile;
+package com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.item.data;
 
 import com.codetaylor.mc.athenaeum.inventory.ObservableStackHandler;
 import com.codetaylor.mc.athenaeum.network.tile.spi.ITileDataItemStackHandler;
@@ -11,7 +11,7 @@ public class BucketItemStackHandler
     extends ObservableStackHandler
     implements ITileDataItemStackHandler {
 
-  /* package */ BucketItemStackHandler() {
+  public BucketItemStackHandler() {
 
     super(3);
   }

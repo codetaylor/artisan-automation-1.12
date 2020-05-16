@@ -1,4 +1,4 @@
-package com.codetaylor.mc.artisanautomation.modules.automator.tile;
+package com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.item;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
@@ -7,14 +7,14 @@ import net.minecraftforge.oredict.OreDictionary;
 import javax.annotation.Nonnull;
 import java.util.function.BooleanSupplier;
 
-public class GhostItemValidationItemHandlerWrapper
+public class GhostItemInsertValidationItemHandlerWrapper
     implements IItemHandler {
 
   private final IItemHandler handler;
   private final IItemHandler ghostHandler;
   private final BooleanSupplier inventoryLocked;
 
-  public GhostItemValidationItemHandlerWrapper(IItemHandler handler, IItemHandler ghostHandler, BooleanSupplier inventoryLocked) {
+  public GhostItemInsertValidationItemHandlerWrapper(IItemHandler handler, IItemHandler ghostHandler, BooleanSupplier inventoryLocked) {
 
     this.handler = handler;
     this.ghostHandler = ghostHandler;

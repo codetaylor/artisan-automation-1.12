@@ -1,4 +1,4 @@
-package com.codetaylor.mc.artisanautomation.modules.automator.tile.supplier.delegate;
+package com.codetaylor.mc.artisanautomation.modules.automator.tile.supplier.item;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;

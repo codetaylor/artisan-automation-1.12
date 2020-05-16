@@ -1,6 +1,5 @@
-package com.codetaylor.mc.artisanautomation.modules.automator.tile.supplier.delegate;
+package com.codetaylor.mc.artisanautomation.modules.automator.tile.supplier.item;
 
-import com.codetaylor.mc.artisanautomation.modules.automator.tile.supplier.delegate.ItemHandlerDelegate;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;

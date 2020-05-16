@@ -1,6 +1,5 @@
-package com.codetaylor.mc.artisanautomation.modules.automator.tile;
+package com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.item.data;
 
-import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.item.data.InventoryGhostItemStackHandler;
 import com.codetaylor.mc.artisanworktables.lib.IBooleanSupplier;
 import com.codetaylor.mc.athenaeum.inventory.ObservableStackHandler;
 import com.codetaylor.mc.athenaeum.network.tile.spi.ITileDataItemStackHandler;
@@ -13,7 +12,7 @@ public class InventoryItemStackHandler
   private final IBooleanSupplier isLocked;
   private final InventoryGhostItemStackHandler ghostItemStackHandler;
 
-  /* package */ InventoryItemStackHandler(
+  public InventoryItemStackHandler(
       IBooleanSupplier isLocked,
       InventoryGhostItemStackHandler ghostItemStackHandler
   ) {
@@ -23,7 +22,7 @@ public class InventoryItemStackHandler
     this.ghostItemStackHandler = ghostItemStackHandler;
   }
 
-  /* package */ InventoryItemStackHandler(InventoryItemStackHandler toCopy) {
+  public InventoryItemStackHandler(InventoryItemStackHandler toCopy) {
 
     super(toCopy.getSlots());
     this.isLocked = toCopy.isLocked;
