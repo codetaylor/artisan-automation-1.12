@@ -3,6 +3,7 @@
   * **Fixed:**
     * Crafting output dupe [(#234)](https://github.com/codetaylor/artisan-worktables/issues/234)
     * Exporting crafted item to inventory should respect the locked items
+    * Recipe output should not void when inventory locked
 
 ---
 

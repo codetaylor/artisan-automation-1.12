@@ -67,7 +67,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -75,6 +74,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -1283,7 +1283,6 @@ public class TileAutomator
 
         int matrixSlotCount = automatorCraftingContext.getCraftingMatrixHandler().getSlots();
 
-        // Put any items remaining in the crafting grid back into the inventory, ie. empty bucket.
         for (int j = 0; j < matrixSlotCount; j++) {
           ItemStack itemStack = automatorCraftingContext.getCraftingMatrixHandler().getStackInSlot(j);
 
@@ -1375,7 +1374,9 @@ public class TileAutomator
       IItemHandler handler;
 
       if (outputMode == EnumOutputMode.Inventory) {
-        handler = new InventoryItemStackHandler(this.getInventoryItemStackHandler());
+        // This needs to be wrapped in a ghost item check
+        InventoryItemStackHandler handlerCopy = new InventoryItemStackHandler(this.getInventoryItemStackHandler());
+        handler = new GhostItemValidationItemHandlerWrapper(handlerCopy, this.inventoryGhostItemStackHandler, this.inventoryLocked::get);
 
       } else {
         handler = new OutputItemStackHandler(this.getOutputItemStackHandler(recipeSlotIndex));
@@ -1427,9 +1428,6 @@ public class TileAutomator
     ItemStack remainingItems = toInsert.copy();
 
     for (int i = 0; i < handler.getSlots(); i++) {
-      // The simulate flag is set to false here because we're working on a
-      // duplicate handler. This is important to determine if the given
-      // handler can contain all of the items in question.
       remainingItems = handler.insertItem(i, remainingItems, false);
 
       if (remainingItems.isEmpty()) {
@@ -1835,85 +1833,50 @@ public class TileAutomator
   // ---------------------------------------------------------------------------
 
   public static class ItemCapabilityWrapper
-      implements IItemHandler {
+      extends GhostItemValidationItemHandlerWrapper {
 
-    private final InventoryItemStackHandler inventoryItemStackHandler;
-    private final InventoryGhostItemStackHandler inventoryGhostItemStackHandler;
     private final OutputItemStackHandler[] outputItemStackHandlers;
     private final List<TileDataEnum<EnumOutputMode>> outputModes;
-    private final IBooleanSupplier inventoryLocked;
 
     /* package */ ItemCapabilityWrapper(
         InventoryItemStackHandler inventoryItemStackHandler,
         InventoryGhostItemStackHandler inventoryGhostItemStackHandler,
         OutputItemStackHandler[] outputItemStackHandlers,
         List<TileDataEnum<EnumOutputMode>> outputModes,
-        IBooleanSupplier inventoryLocked
+        BooleanSupplier inventoryLocked
     ) {
 
-      this.inventoryItemStackHandler = inventoryItemStackHandler;
-      this.inventoryGhostItemStackHandler = inventoryGhostItemStackHandler;
+      super(inventoryItemStackHandler, inventoryGhostItemStackHandler, inventoryLocked);
       this.outputItemStackHandlers = outputItemStackHandlers;
       this.outputModes = outputModes;
-      this.inventoryLocked = inventoryLocked;
     }
 
     @Override
     public int getSlots() {
 
-      return this.inventoryItemStackHandler.getSlots() + this.outputItemStackHandlers.length;
+      return super.getSlots() + this.outputItemStackHandlers.length;
     }
 
     @Nonnull
     @Override
     public ItemStack getStackInSlot(int slot) {
 
-      if (slot < this.inventoryItemStackHandler.getSlots()) {
-        return this.inventoryItemStackHandler.getStackInSlot(slot);
+      if (slot < super.getSlots()) {
+        return super.getStackInSlot(slot);
       }
 
-      return this.outputItemStackHandlers[slot - this.inventoryItemStackHandler.getSlots()].getStackInSlot(0);
-    }
-
-    @Nonnull
-    @Override
-    public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-
-      if (slot >= this.inventoryItemStackHandler.getSlots()) {
-        return stack;
-      }
-
-      if (this.inventoryLocked.get()) {
-        ItemStack ghostStack = this.inventoryGhostItemStackHandler.getStackInSlot(slot);
-
-        if (ghostStack.getItem() != stack.getItem()) {
-          // items aren't equal
-          return stack;
-
-        } else if (ghostStack.getMetadata() != OreDictionary.WILDCARD_VALUE
-            && ghostStack.getMetadata() != stack.getMetadata()) {
-          // ghost stack doesn't have wildcard and metas don't match
-          return stack;
-
-        } else if (ghostStack.hasTagCompound()
-            && !ItemStack.areItemStackTagsEqual(ghostStack, stack)) {
-          // ghost stack has tag, tags aren't equal
-          return stack;
-        }
-      }
-
-      return this.inventoryItemStackHandler.insertItem(slot, stack, simulate);
+      return this.outputItemStackHandlers[slot - super.getSlots()].getStackInSlot(0);
     }
 
     @Nonnull
     @Override
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
 
-      if (slot < this.inventoryItemStackHandler.getSlots()) {
+      if (slot < super.getSlots()) {
         return ItemStack.EMPTY;
       }
 
-      int actualSlot = slot - this.inventoryItemStackHandler.getSlots();
+      int actualSlot = slot - super.getSlots();
 
       if (this.outputModes.get(actualSlot).get() != EnumOutputMode.Manual) {
         return ItemStack.EMPTY;
@@ -1925,11 +1888,11 @@ public class TileAutomator
     @Override
     public int getSlotLimit(int slot) {
 
-      if (slot < this.inventoryItemStackHandler.getSlots()) {
-        return this.inventoryItemStackHandler.getSlotLimit(slot);
+      if (slot < super.getSlots()) {
+        return super.getSlotLimit(slot);
       }
 
-      return this.outputItemStackHandlers[slot - this.inventoryItemStackHandler.getSlots()].getSlotLimit(0);
+      return this.outputItemStackHandlers[slot - super.getSlots()].getSlotLimit(0);
     }
   }
 
