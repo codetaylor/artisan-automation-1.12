@@ -1,3 +1,13 @@
+**1.0.5**
+
+  * **Fixed:**
+    * Inserting liquid from stackable containers voids container & liquid [(#236)](https://github.com/codetaylor/artisan-worktables/issues/236)
+    
+  * **Required:**
+    * Athenaeum >= 1.18.1
+    
+---
+
 **1.0.4**
 
   * **Fixed:**

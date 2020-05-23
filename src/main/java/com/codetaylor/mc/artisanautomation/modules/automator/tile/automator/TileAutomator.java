@@ -34,6 +34,7 @@ import com.codetaylor.mc.athenaeum.network.tile.data.*;
 import com.codetaylor.mc.athenaeum.network.tile.spi.ITileData;
 import com.codetaylor.mc.athenaeum.tile.IContainerProvider;
 import com.codetaylor.mc.athenaeum.util.BlockHelper;
+import com.codetaylor.mc.athenaeum.util.FluidUtilFix;
 import com.codetaylor.mc.athenaeum.util.StackHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -1536,6 +1537,7 @@ public class TileAutomator
           int containerCapacity = capability.getTankProperties()[0].getCapacity();
           FluidStack fluid = capability.drain(containerCapacity, false);
           fluid = fluid != null ? fluid.copy() : null;
+          // We don't need to use FluidUtilFix version
           FluidActionResult fluidActionResult = FluidUtil.tryEmptyContainer(
               container, this.fluidHandlers[i], containerCapacity, null, true);
 

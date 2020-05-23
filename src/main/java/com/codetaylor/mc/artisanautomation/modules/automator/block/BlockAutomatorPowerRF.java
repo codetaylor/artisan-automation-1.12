@@ -7,6 +7,7 @@ import com.codetaylor.mc.artisanautomation.modules.automator.tile.supplier.TileA
 import com.codetaylor.mc.artisanworktables.lib.BlockPartialBase;
 import com.codetaylor.mc.athenaeum.util.AABBHelper;
 import com.codetaylor.mc.athenaeum.util.FluidHelper;
+import com.codetaylor.mc.athenaeum.util.FluidUtilFix;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -105,7 +106,7 @@ public class BlockAutomatorPowerRF
       if (fluidHandler != null) {
         if (FluidHelper.drainWaterFromBottle(playerIn, fluidHandler)
             || FluidHelper.drainWaterIntoBottle(playerIn, fluidHandler)
-            || FluidUtil.interactWithFluidHandler(playerIn, hand, fluidHandler)) {
+            || FluidUtilFix.interactWithFluidHandler(playerIn, hand, fluidHandler)) {
           return true;
         }
       }
