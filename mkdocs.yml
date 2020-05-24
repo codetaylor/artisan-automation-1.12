@@ -7,6 +7,8 @@ nav:
       - Mechanical Artisan: mechanical-artisan.md
       - Power Converter: power-converter.md
       - Upgrades: upgrades.md
+  - Related:
+      - Artisan Worktables: artisan-worktables.md
   - Development:
       - Contributor's License Agreement: cla.md
 
