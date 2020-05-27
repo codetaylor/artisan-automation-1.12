@@ -1,7 +1,7 @@
 package com.codetaylor.mc.artisanautomation.modules.automator;
 
-import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.item.data.InventoryItemStackHandler;
 import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.fluid.data.FluidHandler;
+import com.codetaylor.mc.artisanautomation.modules.automator.tile.automator.item.data.InventoryItemStackHandler;
 import com.codetaylor.mc.artisanworktables.api.internal.recipe.IArtisanIngredient;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
@@ -13,6 +13,15 @@ import java.util.List;
 
 public final class Util {
 
+  /**
+   * Extracts the given list of recipe ingredients from the given stack handler.
+   * If the optional item handler is provided, items extracted will be placed
+   * into the handler using the item's index from the ingredient list.
+   *
+   * @param recipeIngredients         the list of ingredients to extract
+   * @param inventoryItemStackHandler the handler to extract from
+   * @param itemHandler               optional handler to collect extracted items
+   */
   public static void consumeIngredientsFor(
       List<IArtisanIngredient> recipeIngredients,
       InventoryItemStackHandler inventoryItemStackHandler,
