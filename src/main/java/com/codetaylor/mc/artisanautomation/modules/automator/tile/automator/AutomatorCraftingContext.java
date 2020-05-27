@@ -12,6 +12,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public class AutomatorCraftingContext
     implements ICraftingContext {
@@ -59,9 +60,9 @@ public class AutomatorCraftingContext
   }
 
   @Override
-  public EntityPlayer getPlayer() {
+  public Optional<EntityPlayer> getPlayer() {
 
-    throw new UnsupportedOperationException();
+    return Optional.empty();
   }
 
   @Override
