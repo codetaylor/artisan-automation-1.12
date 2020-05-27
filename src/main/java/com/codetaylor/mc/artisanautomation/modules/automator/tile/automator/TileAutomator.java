@@ -23,7 +23,6 @@ import com.codetaylor.mc.artisanworktables.api.internal.reference.EnumTier;
 import com.codetaylor.mc.artisanworktables.api.internal.reference.EnumType;
 import com.codetaylor.mc.artisanworktables.api.recipe.IArtisanRecipe;
 import com.codetaylor.mc.artisanworktables.api.recipe.IToolHandler;
-import com.codetaylor.mc.artisanworktables.lib.TileNetBase;
 import com.codetaylor.mc.artisanworktables.modules.worktables.block.BlockBase;
 import com.codetaylor.mc.artisanworktables.modules.worktables.block.BlockWorkshop;
 import com.codetaylor.mc.artisanworktables.modules.worktables.block.BlockWorkstation;
@@ -32,9 +31,9 @@ import com.codetaylor.mc.artisanworktables.modules.worktables.item.ItemDesignPat
 import com.codetaylor.mc.artisanworktables.modules.worktables.tile.spi.CraftingMatrixStackHandler;
 import com.codetaylor.mc.athenaeum.network.tile.data.*;
 import com.codetaylor.mc.athenaeum.network.tile.spi.ITileData;
+import com.codetaylor.mc.athenaeum.network.tile.spi.TileEntityDataBase;
 import com.codetaylor.mc.athenaeum.tile.IContainerProvider;
 import com.codetaylor.mc.athenaeum.util.BlockHelper;
-import com.codetaylor.mc.athenaeum.util.FluidUtilFix;
 import com.codetaylor.mc.athenaeum.util.StackHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -73,7 +72,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class TileAutomator
-    extends TileNetBase
+    extends TileEntityDataBase
     implements IContainerProvider<AutomatorContainer, AutomatorGuiContainer>,
     ITileAutomatorPowerConsumer,
     ITickable {
