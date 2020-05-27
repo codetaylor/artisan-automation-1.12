@@ -48,9 +48,9 @@ public class AutomatorCraftingContext
   }
 
   @Override
-  public boolean isPattern() {
+  public boolean swapOutputWithCursorItem() {
 
-    return true;
+    return false;
   }
 
   @Override
