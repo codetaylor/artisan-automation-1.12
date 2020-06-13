@@ -1,4 +1,4 @@
 include ":athenaeum"
-project(":athenaeum").projectDir = file("../athenaeum")
+project(":athenaeum").projectDir = file("../athenaeum-1.12")
 include ":artisan-worktables"
-project(":artisan-worktables").projectDir = file("../artisan-worktables")
+project(":artisan-worktables").projectDir = file("../artisan-worktables-1.12")
