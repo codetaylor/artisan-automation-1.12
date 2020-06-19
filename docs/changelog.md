@@ -1,3 +1,13 @@
+**1.0.6**
+
+  * **Changed:**
+    * Updated to support changes to the Artisan Worktables API
+
+  * **Required:**
+    * Athenaeum >= 1.19.0
+    
+---
+
 **1.0.5**
 
   * **Fixed:**
