@@ -45,6 +45,11 @@ compileJava.doFirst {
             filter {
                 it.replaceAll('@@VERSION@@', project.version)
             }
+            project.ext.replace.each{entry ->
+                filter {
+                    it.replaceAll(entry.key, entry.value)
+                }
+            }
             duplicatesStrategy = DuplicatesStrategy.EXCLUDE
         }
         println "   [OK] Preprocessed [${dir}]"
