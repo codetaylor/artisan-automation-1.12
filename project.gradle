@@ -25,8 +25,8 @@ ext {
   ]
 
   replace = [
-    'required-after:athenaeum;': 'required-after:athenaeum@[1.12.2-1.19.0-RC.1,);',
-    'required-after:artisanworktables;': 'required-after:artisanworktables@[1.12.2-1.23.5-RC.1,);'
+    'required-after:athenaeum;': 'required-after:athenaeum@[1.12.2-1.19.0,);',
+    'required-after:artisanworktables;': 'required-after:artisanworktables@[1.12.2-1.23.5,);'
   ]
 }
 
